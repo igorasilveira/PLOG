@@ -1,6 +1,30 @@
 :- include('Utilitarios.pl').
 
-start :- 
+start(1) :- 
+    Posicoes = [ 
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    ],
+    imprimeTabuleiro(Posicoes).
+	
+start(2) :- 
+    Posicoes = [ 
+['*', ' ', '*', ' ', ' ', ' ', ' '],
+['*', ' ', ' ', ' ', ' ', ' ', ' '],
+[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+['+', '*', ' ', ' ', ' ', ' ', ' '],
+['*', '+', ' ', ' ', ' ', ' ', ' '],
+['+', '*', ' ', '*', '+', '*', '*'],
+['+', '*', '+', '+', '+', ' ', ' ']
+    ],
+    imprimeTabuleiro(Posicoes).
+	
+start(3) :- 
     Posicoes = [ 
 [' ', ' ', ' ', ' ', ' ', ' ', '+'],
 ['+', '+', ' ', ' ', ' ', ' ', '*'],
@@ -11,48 +35,80 @@ start :-
 [' ', ' ', ' ', ' ', ' ', '+', '+']
     ],
     imprimeTabuleiro(Posicoes).
+	
+start :-
+	write(' err ').
 
 interpreta('*') :-
-	ansi_format([bold,fg(red)], '(', []),
-	write(' '),
-	ansi_format([bold,fg(red)], ')', []).
+	%SWI%
+	%ansi_format([bold,fg(red)], '(', []),%
+	%write(' '),%
+	%ansi_format([bold,fg(red)], ')', []),%
+	%NON SWI
+	write(' * ').
+	
 
 interpreta('+') :-
-	ansi_format([bold,fg(blue)], '(', []),
-	write(' '),
-	ansi_format([bold,fg(blue)], ')', []).
+	%SWI%
+	%ansi_format([bold,fg(blue)], '(', []),%
+	%write(' '),
+	%ansi_format([bold,fg(blue)], ')', []).%
+	%NON SWI%
+	write(' @ ').
 
 interpreta(' ') :-
 	write('   ').
     
 interpreta(_) :-
-	write('err').
+	write(' err ').
 
 %+++++++++++ Tabuleiro ++++++++++++%	
 
-imprimeNCol(0, 0, S) :-
-	write('   | '),
-	write('0 | '),	
-	imprimeNCol(0, 1, S).
+imprimeNColTop(0, 0, S) :-
+	write('    |'),
+	write(' A0|'),	
+	imprimeNColTop(0, 1, S).
 	
-imprimeNCol(0, Y, S) :-
+imprimeNColTop(0, Y, S) :-
 	Y < S,
+	write(' A'),
 	write(Y),
-	write(' | '),
+	write('|'),
 	Y1 is Y + 1,
-	imprimeNCol(0, Y1, S).
+	imprimeNColTop(0, Y1, S).
 
-imprimeNCol(0, S, S) :-
+imprimeNColTop(0, S, S) :-
 	write('\n'),
 	imprimeSeparador(-1, S).
 
-imprimeNCol(_, _, _).
+imprimeNColTop(_, _, _).
 
-imprimeLinha(_,_, S, S) :-
+imprimeNColBot(7, 0, S) :-
+	write('    |'),
+	write(' C0| '),	
+	imprimeNColBot(7, 1, S).
+	
+imprimeNColBot(7, Y, S) :-
+	Y < S,
+	write('C'),
+	write(Y),
+	write('| '),
+	Y1 is Y + 1,
+	imprimeNColBot(7, Y1, S).
+
+imprimeNColBot(7, S, S) :-
+	write('\n'),
+	write('\n').
+
+imprimeNColBot(_, _, _).
+
+imprimeLinha(_, Y, S, S) :-
+	write('   D'),
+	write(Y),
 	write('\n').	
 
 imprimeLinha([H | T], Y, 0, S) :-
-	write(' '),
+	write(' B'),
 	write(Y),
 	write(' |'),
 	interpreta(H),
@@ -72,7 +128,7 @@ imprimeLinha(_, A, A, _) :-
 	
 imprimeSeparador(X, S) :-
 	X < S,
-	write(----),
+	write(-----),
 	A is X + 1,
 	imprimeSeparador(A, S).
 
@@ -81,14 +137,16 @@ imprimeSeparador(A, A):-
 
 imprimeTabuleiro([H | T], X, XLimite, YLimite):-
 	X < YLimite,
-	imprimeNCol(X, 0, XLimite),
+	imprimeNColTop(X, 0, XLimite),
 	imprimeLinha(H, X, 0, XLimite),
-	imprimeSeparador(-1, XLimite), %--desde o indice -1, para cobrir os numeros das linhas--% 
+	imprimeSeparador(-1, XLimite), %--desde o indice -1, para cobrir os numeros das linhas--%
 	X1 is X + 1,
+	imprimeNColBot(X1, 0, XLimite),
 	imprimeTabuleiro(T, X1, XLimite, YLimite).
 	
 imprimeTabuleiro(_, _, _, _).
 
 imprimeTabuleiro(Tabuleiro) :-
 	tamanhoTabuleiro(Tabuleiro, XLimite, YLimite),
+	nl,
 	imprimeTabuleiro(Tabuleiro, 0, XLimite, YLimite).
