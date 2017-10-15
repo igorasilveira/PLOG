@@ -102,7 +102,7 @@ imprimeTabuleiro([H | T], X):-
 	imprimeSeparador(-1, 7),
 	X1 is X + 1,
 	imprimeNColBot(X1, 0, 7),
-	imprimeTabuleiro(T, X1, 7, 7).
+	imprimeTabuleiro(T, X1).
 	
 imprimeTabuleiro(_, _).
 
