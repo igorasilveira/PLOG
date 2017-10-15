@@ -1,33 +1,5 @@
 :- include('Utilitarios.pl').
 
-start :- 
-    Posicoes = [ 
-[' ', ' ', ' ', ' ', ' ', ' ', '+'],
-['+', '+', ' ', ' ', ' ', ' ', '*'],
-[' ', ' ', ' ', ' ', ' ', '*', '+'],
-[' ', ' ', ' ', '+', '*', '+', '*'],
-[' ', ' ', ' ', '*', '*', '+', '*'],
-[' ', ' ', '*', '*', '*', '*', '+'],
-[' ', ' ', ' ', ' ', ' ', '+', '+']
-    ],
-    imprimeTabuleiro(Posicoes).
-
-interpreta('*') :-
-	ansi_format([bold,fg(red)], '(', []),
-	write(' '),
-	ansi_format([bold,fg(red)], ')', []).
-
-interpreta('+') :-
-	ansi_format([bold,fg(blue)], '(', []),
-	write(' '),
-	ansi_format([bold,fg(blue)], ')', []).
-
-interpreta(' ') :-
-	write('   ').
-    
-interpreta(_) :-
-	write('err').
-
 %+++++++++++ Tabuleiro ++++++++++++%	
 
 imprimeNCol(0, 0, S) :-
@@ -48,6 +20,7 @@ imprimeNCol(0, S, S) :-
 
 imprimeNCol(_, _, _).
 
+
 imprimeLinha(_,_, S, S) :-
 	write('\n').	
 
@@ -61,7 +34,7 @@ imprimeLinha([H | T], Y, 0, S) :-
 
 imprimeLinha([H | T], Y, X, S) :- 
 	X < S,
-	interpreta(H),
+	write(H),
 	write('|'),
 	A is X + 1,
 	imprimeLinha(T, Y, A, S).
