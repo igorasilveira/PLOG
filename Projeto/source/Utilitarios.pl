@@ -1,10 +1,5 @@
 
-%-------------------------------%
-%-------------------------------%
-%-----Predicados de ajuda-------%
-%-------------------------------%
-%-------------------------------%
-
+%- Utilitarios ao Jogo -%
 
 novaLinha(Vezes) :-
     novaLinha(0, Vezes).
@@ -23,20 +18,6 @@ esperaPorEnter :-
 
 	
 limpaEcra :- novaLinha(50), !.
-
-
-
-tamanhoLista(Lista, Conta):-
-		X = _,
-        auxiliarTamanho(Lista, X),
-		Conta is X.
-
-auxiliarTamanho([],X) :-
-	X = 0.
-		
-auxiliarTamanho([ _ | Cauda ], Conta):-
-        auxiliarTamanho(Cauda,Anterior),
-        Conta = Anterior + 1.
 		
 
 obtemNumeroDeTabuleiro(Escolha) :-
@@ -68,20 +49,3 @@ obtemNumero(Escolha, LimiteBaixo, LimiteAlto) :-
 	write(LimiteAlto), write('...'),
 	novaLinha(2),!, 
 	obtemNumero(Escolha, LimiteBaixo, LimiteAlto).
-	
-tamanhoTabuleiro([H | T], XLimite, YLimite) :-
-		tamanhoLista(H, XLimite),
-		tamanhoLista(T, Tamanho),
-		YLimite is Tamanho + 1.
-
-	
-novaLinha(Vezes) :-
-	novaLinha(0, Vezes).
-
-novaLinha(Linha, Limite) :-
-	Linha < Limite,
-	LinhaInc is Linha + 1,
-	nl,
-	novaLinha(LinhaInc, Limite).
-
-novaLinha(_,_).
