@@ -71,9 +71,9 @@ imprimeNColTop(0, 0, S) :-
 	
 imprimeNColTop(0, Y, S) :-
 	Y < S,
-	write(' A'),
+	write('A'),
 	write(Y),
-	write('|'),
+	write(' |'),
 	Y1 is Y + 1,
 	imprimeNColTop(0, Y1, S).
 
@@ -97,7 +97,6 @@ imprimeNColBot(7, Y, S) :-
 	imprimeNColBot(7, Y1, S).
 
 imprimeNColBot(7, S, S) :-
-	write('\n'),
 	write('\n').
 
 imprimeNColBot(_, _, _).
@@ -135,18 +134,16 @@ imprimeSeparador(X, S) :-
 imprimeSeparador(A, A):-
 	write('\n').
 
-imprimeTabuleiro([H | T], X, XLimite, YLimite):-
-	X < YLimite,
-	imprimeNColTop(X, 0, XLimite),
-	imprimeLinha(H, X, 0, XLimite),
-	imprimeSeparador(-1, XLimite), %--desde o indice -1, para cobrir os numeros das linhas--%
+imprimeTabuleiro([H | T], X):-
+	X < 7,
+	imprimeNColTop(X, 0, 7),
+	imprimeLinha(H, X, 0, 7),
+	imprimeSeparador(-1, 7), %--desde o indice -1, para cobrir os numeros das linhas--%
 	X1 is X + 1,
-	imprimeNColBot(X1, 0, XLimite),
-	imprimeTabuleiro(T, X1, XLimite, YLimite).
+	imprimeNColBot(X1, 0, 7),
+	imprimeTabuleiro(T, X1, 7, 7).
 	
-imprimeTabuleiro(_, _, _, _).
+imprimeTabuleiro(_, _).
 
 imprimeTabuleiro(Tabuleiro) :-
-	tamanhoTabuleiro(Tabuleiro, XLimite, YLimite),
-	nl,
-	imprimeTabuleiro(Tabuleiro, 0, XLimite, YLimite).
+	imprimeTabuleiro(Tabuleiro, 0).
