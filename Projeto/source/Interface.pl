@@ -18,7 +18,7 @@ interpreta(2) :-
 
 interpreta(1) :-
 	write(' '),
-	write('+'),
+	write('*'),
 	write(' ').
 
 interpreta(0) :-
