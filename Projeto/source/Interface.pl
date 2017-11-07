@@ -123,6 +123,8 @@ imprimeTitulo :-
 	novaLinha(3).
 
 %- Desenho de Jogo -%
-jogo(Tabuleiro) :-
+jogo(TipoJogador, ModoJogo) :-
+	criaTabuleiro(Tabuleiro),
   imprimeTabuleiro(Tabuleiro),
+	write(Tipo),
 	nl.
