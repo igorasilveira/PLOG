@@ -34,12 +34,12 @@ verificaMenu1(_) :-
   menuGameMode :-
     imprimeTitulo,
     write('*************************\n'),
-    write('*     Game Type Menu    *\n'),
+    write('*    Player Mode Menu   *\n'),
     write('*************************\n'),
     novaLinha(2),
     write('1: Player - Player\n'),
     write('2: Player - Computer\n'),
-    write('3: Computer - Computer\n'),
+    write('3: Computer - Computer\n\n'),
     repeat,
     read(Choice),
     verificaMenu2(Choice).
@@ -63,27 +63,35 @@ verificaMenu1(_) :-
 
       %- Difficulty Menu -%
 
-      menuGameType(Tabuleiro, TipoJogador) :-
+      menuGameType(ModoJogadores) :-
         imprimeTitulo,
         write('*************************\n'),
-        write('*    Difficulty Menu    *\n'),
+        write('*     Type Game Menu    *\n'),
         write('*************************\n'),
         novaLinha(2),
         write('1: Express\n'),
-        write('2: Expert\n'),
+        write('2: Expert\n\n'),
         repeat,
         read(Choice),
-        verificaMenu3(Choice).
+        verificaMenu3(ModoJogadores, Choice).
 
-        verificaMenu3(1) :-
+        verificaMenu3(ModoJogadores, 1) :-
           limpaEcra,
-          jogo(TipoJogador, 1).
+          comecaJogo(ModoJogadores, 1).
 
-          verificaMenu3(2) :-
+          verificaMenu3(ModoJogadores, 2) :-
             limpaEcra,
-            jogo(TipoJogador, 2).
+            comecaJogo(ModoJogadores, 2).
 
         verificaMenu3(_) :-
           nl,
           write('[ERROR] Invalid option, please choose 1 or 2\n\n'),
           false.
+
+%------- JOGO ---------%
+
+jogo(1, 1, Tabuleiro, Jogador, 0, 0) :-
+  imprimeTabuleiro(Tabuleiro),
+  write('Jogador: '),
+  write(Jogador),
+  nl.

@@ -1,14 +1,3 @@
-criaTabuleiro(Tabuleiro) :-
-	Tabuleiro = [
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0]
-].
-
 %- Desenho dos berlindes -%
 
 interpreta(2) :-
@@ -117,14 +106,6 @@ imprimeTabuleiro(Tabuleiro) :-
 imprimeTitulo :-
 	novaLinha(3),
 	write('*****************************\n'),
-	write('---        SHIFTAGO       ---'),
-	nl,
+	write('---        SHIFTAGO       ---\n'),
 	write('*****************************\n'),
 	novaLinha(3).
-
-%- Desenho de Jogo -%
-jogo(TipoJogador, ModoJogo) :-
-	criaTabuleiro(Tabuleiro),
-  imprimeTabuleiro(Tabuleiro),
-	write(Tipo),
-	nl.
