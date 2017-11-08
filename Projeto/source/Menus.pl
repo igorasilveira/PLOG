@@ -92,6 +92,11 @@ verificaMenu1(_) :-
 
 jogo(1, 1, Tabuleiro, Jogador, 0, 0) :-
   imprimeTabuleiro(Tabuleiro),
-  write('Jogador: '),
-  write(Jogador),
+  informaJogador(Jogador),
+  write('Select your input cell > '),
+  repeat,
+  read_line(Choice),
+  escolheCelula(Choice),
+  trocaJogador(Jogador, NovoJogador),
+  jogo(1, 1, Tabuleiro, NovoJogador, 0, 0),
   nl.

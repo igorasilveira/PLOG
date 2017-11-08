@@ -100,6 +100,7 @@ imprimeTabuleiro([H | T], X):-
 imprimeTabuleiro(_, _).
 
 imprimeTabuleiro(Tabuleiro) :-
+	limpaEcra,
   imprimeTitulo,
 	imprimeTabuleiro(Tabuleiro, 0).
 
@@ -109,3 +110,106 @@ imprimeTitulo :-
 	write('---        SHIFTAGO       ---\n'),
 	write('*****************************\n'),
 	novaLinha(3).
+
+informaJogador(Jogador) :-
+	write('\nPlayer: '),
+	write(Jogador),
+	write('\n\n').
+
+
+escolheCelula('A0') :-
+	write('A0\n').
+
+escolheCelula('A1') :-
+	write('A1\n').
+
+escolheCelula('A2') :-
+	write('A2\n').
+
+escolheCelula('A3') :-
+	write('A3\n').
+
+escolheCelula('A4') :-
+	write('A4\n').
+
+escolheCelula('A5') :-
+	write('A5\n').
+
+escolheCelula('A6') :-
+	write('A6\n').
+
+escolheCelula('B0') :-
+	write('B0\n').
+
+escolheCelula('B1') :-
+	write('B1\n').
+
+escolheCelula('B2') :-
+	write('B2\n').
+
+escolheCelula('B3') :-
+	write('B3\n').
+
+escolheCelula('B4') :-
+	write('B4\n').
+
+escolheCelula('B5') :-
+	write('B5\n').
+
+escolheCelula('B6') :-
+	write('B6\n').
+
+escolheCelula('C0') :-
+	write('C0\n').
+
+escolheCelula('C1') :-
+	write('C1\n').
+
+escolheCelula('C2') :-
+	write('C2\n').
+
+escolheCelula('C3') :-
+	write('C3\n').
+
+escolheCelula('C4') :-
+	write('C4\n').
+
+escolheCelula('C5') :-
+	write('C5\n').
+
+escolheCelula('C6') :-
+	write('C6\n').
+
+escolheCelula('D0') :-
+	write('D0\n').
+
+escolheCelula('D1') :-
+	write('D1\n').
+
+escolheCelula('D2') :-
+	write('D2\n').
+
+escolheCelula('D3') :-
+	write('D3\n').
+
+escolheCelula('D4') :-
+	write('D4\n').
+
+escolheCelula('D5') :-
+	write('D5\n').
+
+escolheCelula('D6') :-
+	write('D6\n').
+
+escolheCelula(_) :-
+	nl,
+	write('[ERROR] Invalid option.\n\n'),
+	write('Select your input cell > '),
+	false.
+
+
+escolheCelulaLetra(_) :-
+	nl,
+	write('[ERROR] Invalid option.\n\n'),
+	write('Select your input cell letter [A, B, C, D] > '),
+	false.
