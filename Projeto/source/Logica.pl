@@ -22,7 +22,8 @@ trocaJogador(2, NovoJogador) :-
 
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number, NumberReceived),
+	char_code(Number1, NumberReceived),
+	atom_number(Number1, Number),
 	insereVertical(Tabuleiro, Tabuleiro2, 0, 0, Number, Jogador),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
