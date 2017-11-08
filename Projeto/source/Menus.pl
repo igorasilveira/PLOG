@@ -90,13 +90,11 @@ verificaMenu1(_) :-
 
 %------- JOGO ---------%
 
-jogo(1, 1, Tabuleiro, Jogador, 0, 0) :-
+jogo(1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador),
   write('Select your input cell > '),
   repeat,
   read_line(Choice),
-  escolheCelula(Choice),
-  trocaJogador(Jogador, NovoJogador),
-  jogo(1, 1, Tabuleiro, NovoJogador, 0, 0),
+  insereBerlinde(Choice, 1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.

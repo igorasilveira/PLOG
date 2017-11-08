@@ -117,34 +117,39 @@ informaJogador(Jogador) :-
 	write('\n\n').
 
 %A
-escolheCelula([65 | Number]) :-
-	write('A').
-	%trataTopo
+insereBerlinde([65 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataTopo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %B
-escolheCelula([66 | Number]) :-
-	write('B').
-	%trataEsquerda
+insereBerlinde([66 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %C
-escolheCelula([67 | Number]) :-
-	write('C').
-	%trataBaixo
+insereBerlinde([67 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataBaixo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %D
-escolheCelula([68 | Number]) :-
-	write('D').
-	%trataDireita
+insereBerlinde([68 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
-escolheCelula(_) :-
+%a
+insereBerlinde([97 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataTopo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%b
+insereBerlinde([98 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%c
+insereBerlinde([99 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataBaixo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%d
+insereBerlinde([100 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+insereBerlinde(_) :-
 	nl,
 	write('[ERROR] Invalid option.\n\n'),
 	write('Select your input cell > '),
-	false.
-
-
-escolheCelulaLetra(_) :-
-	nl,
-	write('[ERROR] Invalid option.\n\n'),
-	write('Select your input cell letter [A, B, C, D] > '),
 	false.
