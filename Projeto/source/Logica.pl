@@ -60,5 +60,4 @@ insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	H2 = H,
 	insereEmLinha(T, T2, X1, XLimite, Simbolo).
 
-insereEmLinha(_, _, _, _, _) :-
-	write('what mate').
+insereEmLinha(_, _, 7, _, _).
