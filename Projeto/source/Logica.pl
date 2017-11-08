@@ -22,7 +22,7 @@ trocaJogador(2, NovoJogador) :-
 
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number1, NumberReceived), 
+	char_code(Number1, NumberReceived),
 	atom_chars(Number1, Number2),
 	number_chars(Number, Number2),
 	insereVertical(Tabuleiro, Tabuleiro2, 0, 0, Number, Jogador),
@@ -43,7 +43,9 @@ insereVertical([H | T], [H2 | T2], X, Y, XLimite, Simbolo) :-
 	Y1 is Y + 1,
 	H2 = H,
 	insereEmLinha(H, H2, X, XLimite, Simbolo),
-	insereVertical(T, T2, X, Y1, Simbolo).
+	insereVertical(T, T2, X, Y1, XLimite, Simbolo).
+
+insereVertical(_, _, _, _, _, _).
 
 insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X == XLimite,
@@ -57,3 +59,5 @@ insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X1 is X + 1,
 	H2 = H,
 	insereEmLinha(T, T2, X1, XLimite, Simbolo).
+
+insereEmLinha(_, _, _, _, _).
