@@ -20,8 +20,9 @@ trocaJogador(1, NovoJogador) :-
 trocaJogador(2, NovoJogador) :-
 	NovoJogador = 1.
 
-trataTopo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
+	char_code(Number, NumberReceived),
 	insereVertical(Tabuleiro, Tabuleiro2, 0, 0, Number, Jogador),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
