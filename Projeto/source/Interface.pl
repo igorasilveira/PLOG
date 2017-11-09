@@ -119,10 +119,35 @@ imprimeExit :-
   write('*****************************\n'),
   novaLinha(2).
 
-informaJogador(Jogador) :-
+%Informa jogador Player VS Player
+informaJogador(Jogador, 1) :-
 	write('\nPlayer: '),
 	write(Jogador),
 	write('\n\n').
+
+%Informa jogador Player VS Computer
+
+informaJogador(1, 2) :-
+	write('\nPlayer: '),
+	write(1),
+	write(' (HUMAN)\n\n').
+
+informaJogador(2, 2) :-
+	write('\nPlayer: '),
+	write(2),
+	write(' (COMPUTER)\n\n').
+
+%Informa jogador Player VS Computer
+
+informaJogador(1, 3) :-
+	write('\nPlayer: '),
+	write(1),
+	write(' (COMPUTER)\n\n').
+
+informaJogador(2, 3) :-
+	write('\nPlayer: '),
+	write(2),
+	write(' (COMPUTER)\n\n').
 
 %A
 insereBerlinde([65 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-

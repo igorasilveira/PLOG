@@ -1,3 +1,5 @@
+:- use_module(library(random)).
+
 criaTabuleiro(Tabuleiro) :-
 	Tabuleiro = [
 	[0, 0, 0, 0, 0, 0, 0],
@@ -23,30 +25,73 @@ trocaJogador(2, NovoJogador) :-
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
 	getNumber(NumberReceived, NumberFinal),
-	updateBoard(Jogador, 1, NumberFinal,Tabuleiro,Tabuleiro2),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
+	updateVerticalTopo(Jogador, Jogador, 0, NumberFinal,Tabuleiro,Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
 
 trataDireita([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
 	getNumber(NumberReceived, NumberFinal),
-	updateBoard(Jogador, NumberFinal, 7, Tabuleiro,Tabuleiro2),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
+	updateHorizontalDireita(Jogador, Jogador, NumberFinal, 8, Tabuleiro,Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
 
 trataEsquerda([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
 	getNumber(NumberReceived, NumberFinal),
-	updateBoard(Jogador, NumberFinal, 1, Tabuleiro,Tabuleiro2),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
+	updateHorizontalEsquerda(Jogador, Jogador, NumberFinal, 0,Tabuleiro,Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
 
 trataBaixo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
 	getNumber(NumberReceived, NumberFinal),
-	updateBoard(Jogador, 7, NumberFinal, Tabuleiro,Tabuleiro2),
+	updateVerticalBaixo(Jogador, Jogador, 8, NumberFinal,Tabuleiro,Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
+
+%UPDATES VERTICAIS
+
+updateVerticalTopo(Jogador, Peca, Y, Number, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos) :-
+	Y < 7,
+	Peca \= 0,
+	Y1 is Y + 1,
+	verCasa(Tabuleiro, Y1, Number, NovaPeca),
+	updateBoard(Peca, Y1, Number, Tabuleiro, Tabuleiro2),
+	updateVerticalTopo(Jogador, NovaPeca, Y1, Number, Tabuleiro2, Tabuleiro3, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
+
+updateVerticalTopo(Jogador, _, _, _, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos):-
 	trocaJogador(Jogador, NovoJogador),
-	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
+	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
+
+updateVerticalBaixo(Jogador, Peca, Y, Number, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos) :-
+	Y > 0,
+	Peca \= 0,
+	Y1 is Y - 1,
+	verCasa(Tabuleiro, Y1, Number, NovaPeca),
+	updateBoard(Peca, Y1, Number, Tabuleiro, Tabuleiro2),
+	updateVerticalBaixo(Jogador, NovaPeca, Y1, Number, Tabuleiro2, Tabuleiro3, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
+
+updateVerticalBaixo(Jogador, _, _, _, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos):-
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
+
+%UPDATES HORIZONTAIS
+updateHorizontalDireita(Jogador, Peca, Number, X, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos) :-
+	X > 0,
+	Peca \= 0,
+	X1 is X - 1,
+	verCasa(Tabuleiro, Number, X1, NovaPeca),
+	updateBoard(Peca, Number, X1, Tabuleiro, Tabuleiro2),
+	updateHorizontalDireita(Jogador, NovaPeca, Number, X1, Tabuleiro2, Tabuleiro3, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
+
+updateHorizontalDireita(Jogador, _, _, _, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos):-
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
+
+updateHorizontalEsquerda(Jogador, Peca, Number, X, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos) :-
+	X < 7,
+	Peca \= 0,
+	X1 is X + 1,
+	verCasa(Tabuleiro, Number, X1, NovaPeca),
+	updateBoard(Peca, Number, X1, Tabuleiro, Tabuleiro2),
+	updateHorizontalEsquerda(Jogador, NovaPeca, Number, X1, Tabuleiro2, Tabuleiro3, TipoJogo, ModoJogadores, J1Pontos, J2Pontos).
+
+updateHorizontalEsquerda(Jogador, _, _, _, Tabuleiro, Tabuleiro2, TipoJogo, ModoJogadores, J1Pontos, J2Pontos):-
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 % Faz update a Board
 updateTo(_,[],[],_,_).
