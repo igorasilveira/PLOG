@@ -47,14 +47,14 @@ insereVertical([H | T], [H2 | T2], X, Y, XLimite, Simbolo) :-
 
 insereVertical(_, _, _, _, _, _).
 
-insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
+insereEmLinha([H | T], [H2 | T2], _, X, XLimite, Simbolo) :-
 	X == XLimite,
 	X1 is X + 1,
 	SimboloSeguinte is H,
 	H2 = Simbolo,
-	insereEmLinha(T, T2, X1, XLimite, SimboloSeguinte).
+	insereEmLinha(T, T2, 0, X1, XLimite, SimboloSeguinte).
 
-insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
+insereEmLinha([H | T], [H2 | T2], 0, X, XLimite, Simbolo) :-
 	X < 7,
 	X1 is X + 1,
 	H2 = H,
