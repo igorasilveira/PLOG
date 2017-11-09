@@ -58,6 +58,6 @@ insereEmLinha([H | T], [H2 | T2], 0, X, XLimite, Simbolo) :-
 	X < 7,
 	X1 is X + 1,
 	H2 = H,
-	insereEmLinha(T, T2, X1, XLimite, Simbolo).
+	insereEmLinha(T, T2, 0, X1, XLimite, Simbolo).
 
-insereEmLinha(_, _, 7, _, _).
+insereEmLinha(_, _, _, 7, _, _).
