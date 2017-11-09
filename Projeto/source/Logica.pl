@@ -50,14 +50,13 @@ insereVertical(_, _, _, _, _, _).
 insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X == XLimite,
 	X1 is X + 1,
-	SimboloSeguinte is Simbolo,
-	H2 = Simbolo,
-	insereEmLinha(T, T2, X1, XLimite, SimboloSeguinte).
+	H2 = 0,
+	insereEmLinha(T, T2, X1, XLimite, 1).
 
 insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X < 7,
 	X1 is X + 1,
-	H2 = H,
+	H2 = 1,
 	insereEmLinha(T, T2, X1, XLimite, Simbolo).
 
 insereEmLinha(_, _, 7, _, _).
