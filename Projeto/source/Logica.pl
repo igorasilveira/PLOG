@@ -54,7 +54,7 @@ updateVertical(Jogador, Y, Number, Tabuleiro, Tabuleiro2) :-
 	updateBoard(Jogador, Y1, Number, Tabuleiro, Tabuleiro2),
 	updateVertical(Jogador, Y1, Number, Tabuleiro, Tabuleiro2).
 
-updateVertical(_, _, 7, _, _).
+updateVertical(_, 7, _, _, _).
 % Faz update a Board
 updateTo(_,[],[],_,_).
 updateTo(ElemToChange,[[_|Xs]|Ys],[[ElemToChange|Xs1]|Ys1],1,1) :-
