@@ -23,7 +23,7 @@ trocaJogador(2, NovoJogador) :-
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
 	getNumber(NumberReceived, NumberFinal),
-	updateBoard(Jogador, 1, NumberFinal,Tabuleiro,Tabuleiro2),
+	updateVertical(Jogador, 0, NumberFinal,Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
@@ -48,6 +48,13 @@ trataBaixo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
+updateVertical(Jogador, Y, Number, Tabuleiro, Tabuleiro2) :-
+	Y < 7,
+	Y1 is Y + 1,
+	updateBoard(Jogador, Y1, Number, Tabuleiro, Tabuleiro2),
+	updateVertical(Jogador, Y1, Number, Tabuleiro, Tabuleiro2).
+
+updateVertical(_, _, 7, _, _).
 % Faz update a Board
 updateTo(_,[],[],_,_).
 updateTo(ElemToChange,[[_|Xs]|Ys],[[ElemToChange|Xs1]|Ys1],1,1) :-
