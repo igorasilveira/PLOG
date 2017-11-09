@@ -105,11 +105,19 @@ imprimeTabuleiro(Tabuleiro) :-
 	imprimeTabuleiro(Tabuleiro, 0).
 
 imprimeTitulo :-
+	limpaEcra,
 	novaLinha(3),
 	write('*****************************\n'),
 	write('---        SHIFTAGO       ---\n'),
 	write('*****************************\n'),
 	novaLinha(3).
+
+imprimeExit :-
+	nl,
+  write('*****************************\n'),
+  write('--- Now Exiting, goodbye! ---\n'),
+  write('*****************************\n'),
+  novaLinha(2).
 
 informaJogador(Jogador) :-
 	write('\nPlayer: '),
@@ -148,7 +156,13 @@ insereBerlinde([99 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pon
 insereBerlinde([100 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
-insereBerlinde(_) :-
+insereBerlinde([81 | _], _, _, _, _, _, _) :-
+	menuPrincipal.
+
+insereBerlinde([113 | _], _, _, _, _, _, _) :-
+	menuPrincipal.
+
+insereBerlinde([_ | _], _, _, _, _, _, _) :-
 	nl,
 	write('[ERROR] Invalid option.\n\n'),
 	write('Select your input cell > '),

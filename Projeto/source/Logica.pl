@@ -22,40 +22,28 @@ trocaJogador(2, NovoJogador) :-
 
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number1, NumberReceived),
-	atom_chars(Number1, Number2),
-	number_chars(Number, Number2),
-	NumberFinal is Number + 1,
+	getNumber(NumberReceived, NumberFinal),
 	updateBoard(Jogador, 1, NumberFinal,Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
 trataDireita([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number1, NumberReceived),
-	atom_chars(Number1, Number2),
-	number_chars(Number, Number2),
-	NumberFinal is Number + 1,
+	getNumber(NumberReceived, NumberFinal),
 	updateBoard(Jogador, NumberFinal, 7, Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
 trataEsquerda([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number1, NumberReceived),
-	atom_chars(Number1, Number2),
-	number_chars(Number, Number2),
-	NumberFinal is Number + 1,
+	getNumber(NumberReceived, NumberFinal),
 	updateBoard(Jogador, NumberFinal, 1, Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
 trataBaixo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	Tabuleiro2 = _,
-	char_code(Number1, NumberReceived),
-	atom_chars(Number1, Number2),
-	number_chars(Number, Number2),
-	NumberFinal is Number + 1,
+	getNumber(NumberReceived, NumberFinal),
 	updateBoard(Jogador, 7, NumberFinal, Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
@@ -81,4 +69,3 @@ updateTo(ElemToChange,[Xs|Ys],[Xs|Ys1],N,M) :-
 
 updateBoard(ElemToChange,Y,X,Board,NewBoard) :-
                     updateTo(ElemToChange,Board,NewBoard,X,Y).
-
