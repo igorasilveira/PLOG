@@ -25,7 +25,8 @@ trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1P
 	char_code(Number1, NumberReceived),
 	atom_chars(Number1, Number2),
 	number_chars(Number, Number2),
-	insereVertical(Tabuleiro, Tabuleiro2, 0, 0, Number, Jogador),
+	%insereVertical(Tabuleiro, Tabuleiro2, 0, 0, Number, Jogador),
+	updateBoard(Jogador, 2, Number,Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
@@ -38,29 +39,25 @@ trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2P
 trataBaixo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	write('Baixo\n').
 
-insereVertical([H | T], [H2 | T2], X, Y, XLimite, Simbolo) :-
-	Y < 7,
-	Y1 is Y + 1,
-	H2 = H,
-	insereEmLinha(H, H2, X, XLimite, Simbolo),
-	insereVertical(T, T2, X, Y1, XLimite, Simbolo).
+% Faz update a Board
+updateTo(_,[],[],_,_).
+updateTo(ElemToChange,[[_|Xs]|Ys],[[ElemToChange|Xs1]|Ys1],1,1) :-
+                    !,updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],0,0).
 
-insereVertical(_, _, _, _, _, _).
+updateTo(ElemToChange,[[X]|Xs],[[X]|Xs1],0,0) :-
+                    updateTo(ElemToChange,Xs,Xs1,0,0),!.
 
-insereEmLinha([H | T], [H2 | T2], _, X, XLimite, Simbolo) :-
-	X == XLimite,
-	X1 is X + 1,
-	SimboloSeguinte is H,
-	H2 = Simbolo,
-	write('h2: '),
-	write(H2),
-	nl,
-	insereEmLinha(T, T2, X1, XLimite, SimboloSeguinte).
+updateTo(ElemToChange,[[X|Xs]|Ys],[[X|Xs1]|Ys1],0,0) :-
+                    updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],0,0).
 
-insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
-	X < 7,
-	X1 is X + 1,
-	H2 = H,
-	insereEmLinha(T, T2, X1, XLimite, Simbolo).
+updateTo(ElemToChange,[[X|Xs]|Ys],[[X|Xs1]|Ys1],N,1) :-
+                    N1 is N-1,
+                    updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],N1,1).
 
-insereEmLinha(_, _, _, 7, _, _).
+updateTo(ElemToChange,[Xs|Ys],[Xs|Ys1],N,M) :-
+                    M1 is M-1,
+                    updateTo(ElemToChange,Ys,Ys1,N,M1),!.
+
+updateBoard(ElemToChange,Y,X,Board,NewBoard) :-
+                    updateTo(ElemToChange,Board,NewBoard,X,Y).
+
