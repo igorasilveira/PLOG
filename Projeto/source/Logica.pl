@@ -1,23 +1,23 @@
 criaTabuleiro(Tabuleiro) :-
 	Tabuleiro = [
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0]
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0]
 ].
 
 comecaJogo(ModoJogadores, TipoJogo) :-
   criaTabuleiro(Tabuleiro),
-  Jogador = 1,
+  Jogador is 1,
   jogo(TipoJogo, ModoJogadores, Tabuleiro, Jogador, 0, 0).
 
 trocaJogador(1, NovoJogador) :-
 	NovoJogador = 2.
 
-trocaJogador(1, NovoJogador) :-
+trocaJogador(2, NovoJogador) :-
 	NovoJogador = 1.
 
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -25,18 +25,40 @@ trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1P
 	char_code(Number1, NumberReceived),
 	atom_chars(Number1, Number2),
 	number_chars(Number, Number2),
-	updateBoard(Jogador, 2, Number,Tabuleiro,Tabuleiro2),
+	NumberFinal is Number + 1,
+	updateBoard(Jogador, 1, NumberFinal,Tabuleiro,Tabuleiro2),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
-trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	write('Direita\n').
+trataDireita([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	Tabuleiro2 = _,
+	char_code(Number1, NumberReceived),
+	atom_chars(Number1, Number2),
+	number_chars(Number, Number2),
+	NumberFinal is Number + 1,
+	updateBoard(Jogador, NumberFinal, 7, Tabuleiro,Tabuleiro2),
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
-trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	write('Esquerda\n').
+trataEsquerda([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	Tabuleiro2 = _,
+	char_code(Number1, NumberReceived),
+	atom_chars(Number1, Number2),
+	number_chars(Number, Number2),
+	NumberFinal is Number + 1,
+	updateBoard(Jogador, NumberFinal, 1, Tabuleiro,Tabuleiro2),
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
-trataBaixo(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	write('Baixo\n').
+trataBaixo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	Tabuleiro2 = _,
+	char_code(Number1, NumberReceived),
+	atom_chars(Number1, Number2),
+	number_chars(Number, Number2),
+	NumberFinal is Number + 1,
+	updateBoard(Jogador, 7, NumberFinal, Tabuleiro,Tabuleiro2),
+	trocaJogador(Jogador, NovoJogador),
+	jogo(TipoJogo, ModoJogadores, Tabuleiro2, NovoJogador, J1Pontos, J2Pontos).
 
 % Faz update a Board
 updateTo(_,[],[],_,_).
@@ -59,3 +81,4 @@ updateTo(ElemToChange,[Xs|Ys],[Xs|Ys1],N,M) :-
 
 updateBoard(ElemToChange,Y,X,Board,NewBoard) :-
                     updateTo(ElemToChange,Board,NewBoard,X,Y).
+
