@@ -13,3 +13,9 @@ novaLinha(Linha, Limite) :-
 novaLinha(_,_).
 
 limpaEcra :- novaLinha(50), !.
+
+getNumber(NumberIn, NumberFinal) :-
+	char_code(Number1, NumberIn),
+	atom_chars(Number1, Number2),
+	number_chars(Number, Number2),
+	NumberFinal is Number + 1.
