@@ -1,4 +1,4 @@
-
+:- use_module(library(lists)).
 %- Utilitarios ao Jogo -%
 
 novaLinha(Vezes) :-
@@ -19,3 +19,7 @@ getNumber(NumberIn, NumberFinal) :-
 	atom_chars(Number1, Number2),
 	number_chars(Number, Number2),
 	NumberFinal is Number + 1.
+
+verCasa(Tabuleiro, Y, X, Elemento) :-
+  nth1(Y, Tabuleiro, YMatrix),
+  nth1(X, YMatrix, Elemento).
