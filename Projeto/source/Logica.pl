@@ -1,23 +1,23 @@
 criaTabuleiro(Tabuleiro) :-
 	Tabuleiro = [
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0]
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0]
 ].
 
 comecaJogo(ModoJogadores, TipoJogo) :-
   criaTabuleiro(Tabuleiro),
-  Jogador is 1,
+  Jogador = 1,
   jogo(TipoJogo, ModoJogadores, Tabuleiro, Jogador, 0, 0).
 
 trocaJogador(1, NovoJogador) :-
 	NovoJogador = 2.
 
-trocaJogador(2, NovoJogador) :-
+trocaJogador(1, NovoJogador) :-
 	NovoJogador = 1.
 
 trataTopo([NumberReceived | T], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -47,11 +47,11 @@ insereVertical([H | T], [H2 | T2], X, Y, XLimite, Simbolo) :-
 
 insereVertical(_, _, _, _, _, _).
 
-insereEmLinha([H | T], [H2 | T2], _, X, XLimite, Simbolo) :-
+insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X == XLimite,
 	X1 is X + 1,
 	SimboloSeguinte is H,
-	H2 = Simbolo,
+	H2 = Shit,
 	write('h2: '),
 	write(H2),
 	nl,
@@ -60,7 +60,7 @@ insereEmLinha([H | T], [H2 | T2], _, X, XLimite, Simbolo) :-
 insereEmLinha([H | T], [H2 | T2], X, XLimite, Simbolo) :-
 	X < 7,
 	X1 is X + 1,
-	H2 = H,
+	H2 = 0,
 	insereEmLinha(T, T2, X1, XLimite, Simbolo).
 
-insereEmLinha(_, _, _, 7, _, _).
+insereEmLinha(_, _, _, _, _, _).
