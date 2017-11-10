@@ -120,10 +120,28 @@ imprimeExit :-
   novaLinha(2).
 
 %Informa jogador Player VS Player
-informaJogador(Jogador, 1) :-
+informaJogador(1, 1, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
+	write(1),
+	write('  Pontos: '),
+	write(J1Pontos),
+	nl.
+
+informaJogador(2, 1, J1Pontos, J2Pontos) :-
+	write('\nPlayer: '),
+	write(2),
+	write('  Pontos: '),
+	write(J2Pontos),
+	nl.
+
+%Informa Vitoria
+informaVitoria(Jogador) :-
+	write('\nPlayer '),
 	write(Jogador),
-	write('\n\n').
+	write(' won. CONGRATULATIONS!\n\n'),
+	write('Press any key to continue...'),
+  read_line(A),
+	nl.
 
 %Informa jogador Player VS Computer
 

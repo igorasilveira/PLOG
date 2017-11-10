@@ -23,3 +23,11 @@ getNumber(NumberIn, NumberFinal) :-
 verCasa(Tabuleiro, Y, X, Elemento) :-
   nth1(Y, Tabuleiro, YMatrix),
   nth1(X, YMatrix, Elemento).
+
+atualizaPontos(1, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado) :-
+  J1PontosAtualizado is J1Pontos + Pontos,
+  J2PontosAtualizado is J2Pontos.
+
+atualizaPontos(2, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado) :-
+  J1PontosAtualizado is J1Pontos,
+  J2PontosAtualizado is J2Pontos + Pontos.

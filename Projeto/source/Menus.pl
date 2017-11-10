@@ -85,11 +85,24 @@ verificaMenu1([_ | _]) :-
 
 %------- JOGO ---------%
 
+
+jogo(1, _, Tabuleiro, _, 5, 0) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaVitoria(1),
+  menuPrincipal.
+
+jogo(1, _, Tabuleiro, _, 0, 5) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaVitoria(1),
+  menuPrincipal.
+
+%----------------EXPRESS------------------------
+
 %Player Vs Player, Express
 jogo(1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 1),
-  write('Select your input cell (Q to exit) > '),
+  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
+  write('\nSelect your input cell (Q to exit) > '),
   repeat,
   read_line(Choice),
   insereBerlinde(Choice, 1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
@@ -99,7 +112,7 @@ jogo(1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 jogo(1, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(1, 2),
-  write('Select your input cell (Q to exit) > '),
+  write('\nSelect your input cell (Q to exit) > '),
   repeat,
   read_line(Choice),
   insereBerlinde(Choice, 1, 2, Tabuleiro, 1, J1Pontos, J2Pontos),
@@ -133,4 +146,15 @@ jogo(1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   random(48, 54, Number),
   Choice = [Letter, Number],
   insereBerlinde(Choice, 1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos),
+  nl.
+
+%----------------EXPERT------------------------
+%Player Vs Player, Express
+jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
+  write('\nSelect your input cell (Q to exit) > '),
+  repeat,
+  read_line(Choice),
+  insereBerlinde(Choice, 2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
