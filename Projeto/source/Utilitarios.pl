@@ -31,3 +31,9 @@ atualizaPontos(1, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtuali
 atualizaPontos(2, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado) :-
   J1PontosAtualizado is J1Pontos,
   J2PontosAtualizado is J2Pontos + Pontos.
+
+ite(If, Then, _) :-
+  If, !, Then.
+
+ite(_, _, Else) :-
+  Else.

@@ -126,31 +126,28 @@ verificaSequenciaHorizontal(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Po
 %Verifica Pontos no Tabuleiro para o jogador atual Modo Expert
 verificaSequenciaHorizontal(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, _, _, 7) :-
 	Pontos is 7,
-	write('is 7\n'),
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
 verificaSequenciaHorizontal(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, _, _, 6) :-
 	Pontos is 6,
-	write('is 6\n'),
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
 verificaSequenciaHorizontal(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
 	Pontos is 5,
+	XInicial is X - 4,
+	XFinal is X - 1,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
+	removeBerlindesHorizontal(XInicial, Y, X, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
 
 verificaSequenciaHorizontal(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X, Y, Contador) :-
 	X < 7,
-	Peca == Jogador,
+	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
 	X1 is X + 1,
-	Contador1 is Contador + 1,
 	verCasa(Tabuleiro, Y, X1, NovaPeca),
-	NovaPeca == Jogador,
 	verificaSequenciaHorizontal(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, Pontos, X1, Y, Contador1).
 
 verificaSequenciaHorizontal(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, _, Y, Contador) :-
@@ -161,19 +158,27 @@ verificaSequenciaHorizontal(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Ponto
 verificaSequenciaHorizontal(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, 0, Y1, Contador).
 
 %Verifica Pontos no Tabuleiro para o jogador atual Modo Express (VERTICAL)
-verificaSequenciaVertical(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, _, _, 5) :-
+verificaSequenciaVertical(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
 	Pontos is 5,
+	YInicial is Y - 4,
+	YFinal is Y - 1,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
+	removeBerlindesVertical(YInicial, X, Y, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
+
+
+%Verifica Pontos no Tabuleiro para o jogador atual Modo Express (VERTICAL)
+verificaSequenciaVertical(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
+	Pontos is 5,
+	YInicial is Y - 4,
+	YFinal is Y - 1,
+	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
+	removeBerlindesVertical(YInicial, X, YFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
 
 verificaSequenciaVertical(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X, Y, Contador) :-
 	Y < 7,
-	Peca == Jogador,
-	Y1 is Y + 1,
-	Contador1 is Contador + 1,
+	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
+	ite(Contador1 == 0, Y1 is Y + 1, Y1 is Y + 2),
 	verCasa(Tabuleiro, Y1, X, NovaPeca),
-	NovaPeca == Jogador,
 	verificaSequenciaVertical(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, Pontos, X, Y1, Contador1).
 
 verificaSequenciaVertical(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X, _, Contador) :-
@@ -184,3 +189,24 @@ verificaSequenciaVertical(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos,
 verificaSequenciaVertical(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, Y, 0, Contador) :-
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
+
+removeBerlindesHorizontal(X, Y, XLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	X < XLimite,
+	updateBoard(0, Y, X, Tabuleiro, Tabuleiro2),
+	X1 is X + 1,
+	removeBerlindesHorizontal(X1, Y, XLimite, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos).
+
+removeBerlindesHorizontal(X, Y, XLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trocaJogador(Jogador, NovoJogador),
+	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
+
+removeBerlindesVertical(Y, X, YLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	Y < YLimite,
+	verCasa(Tabuleiro, Y, X, Peca),
+	updateBoard(0, Y, X, Tabuleiro, Tabuleiro2),
+	Y1 is Y + 1,
+	removeBerlindesVertical(Y1, X, YLimite, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos).
+
+removeBerlindesVertical(Y, X, YLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trocaJogador(Jogador, NovoJogador),
+	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
