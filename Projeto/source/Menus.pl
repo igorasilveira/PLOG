@@ -163,8 +163,8 @@ jogo(1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
-  write('\nSelect your input cell (Q to exit) > '),
   repeat,
+  write('\nSelect your input cell (Q to exit) > '),
   read_line(Choice),
   insereBerlinde(Choice, 2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
@@ -172,7 +172,7 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 %---------- Trigger sequencia ------------------
 triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 1),
+  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
   repeat,
   write('\nCell one > '),

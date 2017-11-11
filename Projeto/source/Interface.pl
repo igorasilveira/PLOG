@@ -145,27 +145,35 @@ informaVitoria(Jogador) :-
 
 %Informa jogador Player VS Computer
 
-informaJogador(1, 2) :-
+informaJogador(1, 2, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
 	write(1),
-	write(' (HUMAN)\n\n').
+	write('  (HUMAN)\nPontos: '),
+	write(J1Pontos),
+	nl.
 
-informaJogador(2, 2) :-
+informaJogador(1, 2, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
 	write(2),
-	write(' (COMPUTER)\n\n').
+	write('  (COMPUTER)\nPontos: '),
+	write(J2Pontos),
+	nl.
 
-%Informa jogador Player VS Computer
+%Informa jogador Computer VS Computer
 
-informaJogador(1, 3) :-
+informaJogador(1, 2, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
 	write(1),
-	write(' (COMPUTER)\n\n').
+	write('  (COMPUTER)\nPontos: '),
+	write(J1Pontos),
+	nl.
 
-informaJogador(2, 3) :-
+informaJogador(1, 2, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
 	write(2),
-	write(' (COMPUTER)\n\n').
+	write('  (COMPUTER)\nPontos: '),
+	write(J2Pontos),
+	nl.
 
 %A
 insereBerlinde([65 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
