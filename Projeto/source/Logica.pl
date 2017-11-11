@@ -181,9 +181,7 @@ verificaSequenciaVerticalDescendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pon
 
 %-------------- TRIGGER pedido remoção coluna --------------------
 verificaSequenciaVerticalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
-	Pontos is 5,
-	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	removeBerlindesVertical(YInicial, X, YFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
+	triggerSequencia(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, X).
 
 %-------------------- verifica sequencia vertical (cima para baixo) ---------------
 verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, 7, 0, 0).
@@ -198,7 +196,7 @@ verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador
 verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X, _, Contador) :-
 	X < 7,
 	X1 is X + 1,
-	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X1, 0, 0).
+	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, Pontos, X1, 0, 0).
 
 %-------------- TRIGGER pedido remoção coluna --------------------
 verificaSequenciaVerticalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
@@ -209,11 +207,7 @@ verificaSequenciaVerticalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pont
 
 %-------------------- verifica sequencia vertical (baixo para cima) ---------------
 verificaSequenciaVerticalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
-	Pontos is 5,
-	YInicial is Y + 2,
-	YFinal is Y + 5,
-	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	removeBerlindesVertical(YInicial, X, YFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
+	triggerSequencia(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, X).
 
 verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, 7, 8, Contador).
 
@@ -227,7 +221,7 @@ verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador,
 verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X, _, Contador) :-
 	X < 7,
 	X1 is X + 1,
-	verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, Pontos, X1, 8, 0).
+	verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, Pontos, X1, 8, 0).
 
 %-------- remoçao de berlindes horizontal -------------
 removeBerlindesHorizontal(X, Y, XLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -252,9 +246,14 @@ removeBerlindesVertical(Y, X, YLimite, ModoJogadores, Tabuleiro, Jogador, J1Pont
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 %------------------ Escolhe tratamento vertical ----------------
-escolherVertical(Option, YInicial, YFinal, X, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+escolherVertical(YInicial, YFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	OutroYLimite is YFinal - 1,
+	T is YFinal - YInicial,
+	getPoints(T, Pontos),
+	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
+	removeBerlindesVertical(YInicial, X, OutroYLimite, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
 
-escolherHorizontal(Option, XInicial, XFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+escolherHorizontal(XInicial, XFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	OutroXLimite is XFinal - 1,
 	T is XFinal - XInicial,
 	getPoints(T, Pontos),

@@ -119,6 +119,15 @@ imprimeExit :-
   write('*****************************\n'),
   novaLinha(2).
 
+%Informa Vitoria
+informaVitoria(Jogador) :-
+	write('\nPlayer '),
+	write(Jogador),
+	write(' won. CONGRATULATIONS!\n\n'),
+	write('Press any key to continue...'),
+  read_line(A),
+	nl.
+
 %Informa jogador Player VS Player
 informaJogador(1, 1, J1Pontos, J2Pontos) :-
 	write('\nPlayer: '),
@@ -133,16 +142,6 @@ informaJogador(2, 1, J1Pontos, J2Pontos) :-
 	write('  Pontos: '),
 	write(J2Pontos),
 	nl.
-
-%Informa Vitoria
-informaVitoria(Jogador) :-
-	write('\nPlayer '),
-	write(Jogador),
-	write(' won. CONGRATULATIONS!\n\n'),
-	write('Press any key to continue...'),
-  read_line(A),
-	nl.
-
 %Informa jogador Player VS Computer
 
 informaJogador(1, 2, J1Pontos, J2Pontos) :-
@@ -216,62 +215,77 @@ insereBerlinde([113 | _], _, _, _, _, _, _) :-
 insereBerlinde([_ | _], _, _, _, _, _, _) :-
 	nl,
 	write('[ERROR] Invalid option.\n\n'),
-	write('Select your input cell > '),
+	write('Select your input cell (Q to exit) > '),
 	false.
 
 %A
-processaRemocao([65 | Number1], [65 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+processaRemocao([65 | Number1], [65 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	getSmaller(Number1, Number2, XInicial, XFinal),
-	Option = _,
-	ite(XInicial < 2, Option is 1, Option is 2),
 	XInicialFinal is XInicial + 1,
-	XFinalFinal is XFinal,
-	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	XFinalFinal is XFinal + 1,
+	pedirColunaLinhaRemocao(1, Y),
+	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %B
-processaRemocao([66 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+processaRemocao([66 | Number1], [66 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	getSmaller(Number1, Number2, YInicial, YFinal),
+	YInicialFinal is YInicial + 1,
+	YFinalFinal is YFinal + 1,
+	pedirColunaLinhaRemocao(2, X),
+	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %C
-processaRemocao([67 | Number1], [67 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+processaRemocao([67 | Number1], [67 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	getSmaller(Number1, Number2, XInicial, XFinal),
-	Option = _,
-	ite(XInicial < 2, Option is 1, Option is 2),
 	XInicialFinal is XInicial + 1,
 	XFinalFinal is XFinal + 1,
-	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	pedirColunaLinhaRemocao(1, Y),
+	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %D
-processaRemocao([68 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+processaRemocao([68 | Number1], [68 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	getSmaller(Number1, Number2, YInicial, YFinal),
+	YInicialFinal is YInicial + 1,
+	YFinalFinal is YFinal + 1,
+	pedirColunaLinhaRemocao(2, X),
+	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %a
-processaRemocao([97 | Number1], [97 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+processaRemocao([97 | Number1], [97 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	getSmaller(Number1, Number2, XInicial, XFinal),
-	Option = _,
-	ite(XInicial < 2, Option is 1, Option is 2),
 	XInicialFinal is XInicial + 1,
 	XFinalFinal is XFinal + 1,
-	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	Y = _,
+	write('antes\n'),
+	pedirColunaLinhaRemocao(1, Y),
+	write('depois\n'),
+	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %b
-processaRemocao([98 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+processaRemocao([98 | Number1], [98 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	getSmaller(Number1, Number2, YInicial, YFinal),
+	YInicialFinal is YInicial + 1,
+	YFinalFinal is YFinal + 1,
+	pedirColunaLinhaRemocao(2, X),
+	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %c
-processaRemocao([99 | Number1], [99 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+processaRemocao([99 | Number1], [99 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	getSmaller(Number1, Number2, XInicial, XFinal),
-	Option = _,
-	ite(XInicial < 2, Option is 1, Option is 2),
 	XInicialFinal is XInicial + 1,
 	XFinalFinal is XFinal + 1,
-	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	pedirColunaLinhaRemocao(1, Y),
+	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %d
-processaRemocao([100 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+processaRemocao([100 | Number1], [100 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	getSmaller(Number1, Number2, YInicial, YFinal),
+	YInicialFinal is YInicial + 1,
+	YFinalFinal is YFinal + 1,
+	pedirColunaLinhaRemocao(2, X),
+	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
-processaRemocao([_ | _], [_ | _], _, _, _, _, _, _) :-
+processaRemocao([_ | _], [_ | _], _, _, _, _, _) :-
 	nl,
 	write('[ERROR] Invalid options.\n\n'),
 	false.

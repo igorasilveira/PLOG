@@ -34,6 +34,14 @@ getPoints(5, Pontos) :-
 getPoints(6, Pontos) :-
   Pontos is 10.
 
+getIntervalo(LimiteBaixo, LimiteCima, Output) :-
+  read_line(Output),
+  write('Numero lido: '),
+  write(Output),
+  nl,
+  Output >= LimiteBaixo,
+  Output =< LimiteCima.
+
 verCasa(Tabuleiro, Y, X, Elemento) :-
   nth1(Y, Tabuleiro, YMatrix),
   nth1(X, YMatrix, Elemento).

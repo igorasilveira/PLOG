@@ -170,13 +170,33 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   nl.
 
 %---------- Trigger sequencia ------------------
-triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
   repeat,
-  write('\nCell one > '),
+  write('\nCell one22222 > '),
   read_line(Choice1),
   write('\nCell two > '),
   read_line(Choice2),
-  processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y).
+  write('Choice1: '),
+  write(Choice1),
+  nl,
+  write('Choice2: '),
+  write(Choice2),
+  nl,
+  processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%--------------- Pedir linha ------------------
+pedirColunaLinhaRemocao(1, Numero) :-
+  repeat,
+  write('\nInsert Row Number [eg. B0 is 0] > '),
+  getIntervalo(0, 6, Y),
+  Numero is Y + 1.
+
+%--------------- Pedir coluna ------------------
+pedirColunaLinhaRemocao(2, Numero) :-
+  repeat,
+  write('\nInsert Row Number [eg. A0 is 0] > '),
+  getIntervalo(0, 6, X),
+  Numero is X + 1.
