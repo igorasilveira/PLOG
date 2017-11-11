@@ -158,3 +158,14 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   read_line(Choice),
   insereBerlinde(Choice, 2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
+
+%---------- Trigger sequencia ------------------
+triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+  imprimeTabuleiro(Tabuleiro),
+  write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
+  repeat,
+  write('\nCell one > '),
+  read_line(Choice1),
+  write('\nCell two > '),
+  read_line(Choice2),
+  processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y).
