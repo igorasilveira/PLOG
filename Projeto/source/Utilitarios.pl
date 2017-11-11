@@ -20,6 +20,20 @@ getNumber(NumberIn, NumberFinal) :-
 	number_chars(Number, Number2),
 	NumberFinal is Number + 1.
 
+getSmaller([Number1 | T], [Number2 | T], SmallerNumber, LargerNumber) :-
+	getNumber(Number1, FirstNumber),
+	getNumber(Number2, SecondNumber),
+	ite(FirstNumber < SecondNumber, (SmallerNumber is FirstNumber, LargerNumber is SecondNumber), (SmallerNumber is SecondNumber, LargerNumber is FirstNumber)).
+
+getPoints(4, Pontos) :-
+  Pontos is 2.
+
+getPoints(5, Pontos) :-
+  Pontos is 5.
+
+getPoints(6, Pontos) :-
+  Pontos is 10.
+
 verCasa(Tabuleiro, Y, X, Elemento) :-
   nth1(Y, Tabuleiro, YMatrix),
   nth1(X, YMatrix, Elemento).

@@ -210,3 +210,60 @@ insereBerlinde([_ | _], _, _, _, _, _, _) :-
 	write('[ERROR] Invalid option.\n\n'),
 	write('Select your input cell > '),
 	false.
+
+%A
+processaRemocao([65 | Number1], [65 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+	getSmaller(Number1, Number2, XInicial, XFinal),
+	Option = _,
+	ite(XInicial < 2, Option is 1, Option is 2),
+	XInicialFinal is XInicial + 1,
+	XFinalFinal is XFinal,
+	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%B
+processaRemocao([66 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%C
+processaRemocao([67 | Number1], [67 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+	getSmaller(Number1, Number2, XInicial, XFinal),
+	Option = _,
+	ite(XInicial < 2, Option is 1, Option is 2),
+	XInicialFinal is XInicial + 1,
+	XFinalFinal is XFinal + 1,
+	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%D
+processaRemocao([68 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%a
+processaRemocao([97 | Number1], [97 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+	getSmaller(Number1, Number2, XInicial, XFinal),
+	Option = _,
+	ite(XInicial < 2, Option is 1, Option is 2),
+	XInicialFinal is XInicial + 1,
+	XFinalFinal is XFinal + 1,
+	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%b
+processaRemocao([98 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataEsquerda(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%c
+processaRemocao([99 | Number1], [99 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
+	getSmaller(Number1, Number2, XInicial, XFinal),
+	Option = _,
+	ite(XInicial < 2, Option is 1, Option is 2),
+	XInicialFinal is XInicial + 1,
+	XFinalFinal is XFinal + 1,
+	escolherHorizontal(Option, XInicialFinal, XFinalFinal, Y, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%d
+processaRemocao([100 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+processaRemocao([_ | _], [_ | _], _, _, _, _, _, _) :-
+	nl,
+	write('[ERROR] Invalid options.\n\n'),
+	false.
