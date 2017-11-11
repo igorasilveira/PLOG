@@ -93,7 +93,17 @@ jogo(1, _, Tabuleiro, _, 5, 0) :-
 
 jogo(1, _, Tabuleiro, _, 0, 5) :-
   imprimeTabuleiro(Tabuleiro),
+  informaVitoria(2),
+  menuPrincipal.
+
+jogo(2, _, Tabuleiro, _, 10, _) :-
+  imprimeTabuleiro(Tabuleiro),
   informaVitoria(1),
+  menuPrincipal.
+
+jogo(2, _, Tabuleiro, _, _, 10) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaVitoria(2),
   menuPrincipal.
 
 %----------------EXPRESS------------------------
@@ -162,6 +172,7 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 %---------- Trigger sequencia ------------------
 triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Y) :-
   imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 1),
   write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
   repeat,
   write('\nCell one > '),
