@@ -123,9 +123,16 @@ imprimeExit :-
   write('*****************************\n'),
   novaLinha(2).
 
+imprimeGameOver :-
+	nl, nl,
+  write('*****************************\n'),
+  write('---ITS A DRAW, DEAD BOARD!---\n'),
+  write('*****************************\n\n'),
+	abort.
+
 %Informa Vitoria
 informaVitoria(Jogador) :-
-	write('\nPlayer '),
+	write('\n\nPlayer '),
 	write(Jogador),
 	write(' won. CONGRATULATIONS!\n\n'),
 	write('Press any key to continue...'),
@@ -134,7 +141,7 @@ informaVitoria(Jogador) :-
 
 %Informa jogador Player VS Player
 informaJogador(Jogador, 1, J1Pontos, J2Pontos) :-
-	write('\nIS PLAYER '),
+	write('\n\nIS PLAYER '),
 	write(Jogador),
 	write(' TURN TO PLAY\n'),
 	write('\nPlayer: '),
@@ -150,7 +157,7 @@ informaJogador(Jogador, 1, J1Pontos, J2Pontos) :-
 %Informa jogador Player VS Computer
 
 informaJogador(1, 2, J1Pontos, J2Pontos) :-
-	write('\nIS PLAYER '),
+	write('\n\nIS PLAYER '),
 	write(1),
 	write(' [HUMAN] TURN TO PLAY\n'),
 	write('\nPlayer: '),
@@ -165,7 +172,7 @@ informaJogador(1, 2, J1Pontos, J2Pontos) :-
 	nl.
 
 informaJogador(2, 2, J1Pontos, J2Pontos) :-
-	write('\nIS PLAYER '),
+	write('\n\nIS PLAYER '),
 	write(2),
 	write(' [COMPUTER] TURN TO PLAY\n'),
 	write('\nPlayer: '),
@@ -181,19 +188,20 @@ informaJogador(2, 2, J1Pontos, J2Pontos) :-
 
 %Informa jogador Computer VS Computer
 
-informaJogador(1, 2, J1Pontos, J2Pontos) :-
-	write('\nPlayer: '),
-	write(1),
-	write('  (COMPUTER)\nPontos: '),
-	write(J1Pontos),
-	nl.
-
-informaJogador(1, 2, J1Pontos, J2Pontos) :-
-	write('\nPlayer: '),
-	write(2),
-	write('  (COMPUTER)\nPontos: '),
-	write(J2Pontos),
-	nl.
+informaJogador(Jogador, 3, J1Pontos, J2Pontos) :-
+ write('\n\nIS PLAYER '),
+ write(Jogador),
+ write(' [COMPUTER] TURN TO PLAY\n'),
+ write('\nPlayer: '),
+ write(1),
+ write('  Pontos: '),
+ write(J1Pontos),
+ nl,
+ write('\n\nPlayer: '),
+ write(2),
+ write('  Pontos: '),
+ write(J2Pontos),
+ nl.
 
 %A
 insereBerlinde([65 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -226,18 +234,6 @@ insereBerlinde([99 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pon
 %d
 insereBerlinde([100 | Number], TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	trataDireita(Number, TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
-
-insereBerlinde([81 | _], _, _, _, _, _, _) :-
-	menuPrincipal.
-
-insereBerlinde([113 | _], _, _, _, _, _, _) :-
-	menuPrincipal.
-
-insereBerlinde([_ | _], _, _, _, _, _, _) :-
-	nl,
-	write('[ERROR] Invalid option.\n\n'),
-	write('Select your input cell (Q to exit) > '),
-	false.
 
 %A
 processaRemocao([65 | Number1], [65 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
