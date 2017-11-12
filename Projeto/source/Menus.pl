@@ -1,3 +1,5 @@
+:- use_module(library(system)).
+
 %- Menu Inicial -%
 
 menuPrincipal :-
@@ -121,7 +123,7 @@ jogo(1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 %Player Vs Computer, Express
 jogo(1, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(1, 2),
+  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
   write('\nSelect your input cell (Q to exit) > '),
   repeat,
   read_line(Choice),
@@ -130,7 +132,7 @@ jogo(1, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
 
 jogo(1, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(2, 2),
+  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
   random(65, 68, Letter),
   random(48, 54, Number),
   Choice = [Letter, Number],
@@ -138,7 +140,7 @@ jogo(1, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
   nl.
 
 
-%Player Vs Computer, Express
+%Computer Vs Computer, Express
 
 jogo(1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
