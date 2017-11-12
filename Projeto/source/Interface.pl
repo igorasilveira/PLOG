@@ -1,4 +1,8 @@
 %- Desenho dos berlindes -%
+interpreta(3) :-
+	write(' '),
+	write('#'),
+	write(' ').
 
 interpreta(2) :-
 	write(' '),
@@ -228,7 +232,7 @@ processaRemocao([65 | Number1], [65 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(1, Y),
 	verCasa(Tabuleiro, Y, XInicial, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %B
 processaRemocao([66 | Number1], [66 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -240,7 +244,7 @@ processaRemocao([66 | Number1], [66 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(2, X),
 	verCasa(Tabuleiro, YInicial, X, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %C
 processaRemocao([67 | Number1], [67 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -252,7 +256,7 @@ processaRemocao([67 | Number1], [67 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(1, Y),
 	verCasa(Tabuleiro, Y, XInicial, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %D
 processaRemocao([68 | Number1], [68 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -264,7 +268,7 @@ processaRemocao([68 | Number1], [68 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(2, X),
 	verCasa(Tabuleiro, YInicial, X, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %a
 processaRemocao([97 | Number1], [97 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -276,7 +280,7 @@ processaRemocao([97 | Number1], [97 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(1, Y),
 	verCasa(Tabuleiro, Y, XInicial, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %b
 processaRemocao([98 | Number1], [98 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -288,7 +292,7 @@ processaRemocao([98 | Number1], [98 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(2, X),
 	verCasa(Tabuleiro, YInicial, X, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %c
 processaRemocao([99 | Number1], [99 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -300,7 +304,7 @@ processaRemocao([99 | Number1], [99 | Number2], ModoJogadores, Tabuleiro, Jogado
 	pedirColunaLinhaRemocao(1, Y),
 	verCasa(Tabuleiro, Y, XInicial, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerHorizontal(XInicialFinal, XFinalFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %d
 processaRemocao([100 | Number1], [100 | Number2], ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -312,7 +316,30 @@ processaRemocao([100 | Number1], [100 | Number2], ModoJogadores, Tabuleiro, Joga
 	pedirColunaLinhaRemocao(2, X),
 	verCasa(Tabuleiro, YInicial, X, Peca),
 	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
-	escolherVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+	removerVertical(YInicialFinal, YFinalFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+processaRemocao(Choice1, Choice2, Choice3, Choice4, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
+	getSmaller(Choice1, Choice2, XInicial, XFinal),
+	getSmaller(Choice3, Choice4, YInicial, YFinal),
+	XInicialFinal is XInicial + 1,
+	XFinalFinal is XFinal - 1,
+	YInicialFinal is YInicial + 1,
+	YFinalFinal is YFinal - 1,
+	write('XInicial: '),
+	write(XInicialFinal),
+	nl,
+	write('XFinal: '),
+	write(XFinalFinal),
+	nl,
+	write('YInicial: '),
+	write(YInicialFinal),
+	nl,
+	write('YFinalFinal: '),
+	write(YFinalFinal),
+	nl,
+	ite(Tipo == 1, verCasa(Tabuleiro, YInicial, XInicial, Peca), verCasa(Tabuleiro, YFinal, XInicial, Peca)),
+	ite(Peca == Jogador, true, (write('\nThat sequence does not belong to you!\n'), false)),
+	removerDiagonal(XInicialFinal, XFinalFinal, YInicialFinal, YFinalFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo).
 
 processaRemocao([_ | _], [_ | _], _, _, _, _, _) :-
 	nl,

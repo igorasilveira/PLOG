@@ -24,17 +24,19 @@ getNumber(NumberIn, NumberFinal) :-
 	NumberFinal is Number + 1.
 
 getSmaller([Number1 | T], [Number2 | T], SmallerNumber, LargerNumber) :-
+  write('A\n'),
 	getNumber(Number1, FirstNumber),
 	getNumber(Number2, SecondNumber),
+  write('B\n'),
 	ite(FirstNumber < SecondNumber, (SmallerNumber is FirstNumber, LargerNumber is SecondNumber), (SmallerNumber is SecondNumber, LargerNumber is FirstNumber)).
 
-getPoints(4, Pontos) :-
+getPoints(2, Pontos) :-
   Pontos is 2.
 
-getPoints(5, Pontos) :-
+getPoints(3, Pontos) :-
   Pontos is 5.
 
-getPoints(6, Pontos) :-
+getPoints(4, Pontos) :-
   Pontos is 10.
 
 getIntervalo(LimiteBaixo, LimiteCima, Output) :-

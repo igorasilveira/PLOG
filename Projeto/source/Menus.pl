@@ -170,7 +170,7 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   nl.
 
 %---------- Trigger sequencia ------------------
-triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+triggerSequenciaNaoDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
@@ -180,6 +180,21 @@ triggerSequencia(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   write('\nCell two > '),
   read_line(Choice2),
   processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+triggerSequenciaDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
+  write('\n[ATTENTION] Diagonal sequence detected, you must remove it to retrieve your points!\n\n'),
+  repeat,
+  write('\nColumn number 1 [eg. A0 is 0] > '),
+  read_line(Choice1),
+  write('\nColumn number 2 [eg. A5 is 5] > '),
+  read_line(Choice2),
+  write('\nRow number 1 [eg. B0 is 0] > '),
+  read_line(Choice3),
+  write('\nRow number 2 [eg. B5 is 5] > '),
+  read_line(Choice4),
+  processaRemocao(Choice1, Choice2, Choice3, Choice4, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo).
 
 %--------------- Pedir linha ------------------
 pedirColunaLinhaRemocao(1, Numero) :-
