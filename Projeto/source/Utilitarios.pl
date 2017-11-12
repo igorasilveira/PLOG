@@ -14,6 +14,9 @@ novaLinha(_,_).
 
 limpaEcra :- novaLinha(50), !.
 
+extraiNumeroLista([H | T], Numero) :-
+  Numero is H.
+
 getNumber(NumberIn, NumberFinal) :-
 	char_code(Number1, NumberIn),
 	atom_chars(Number1, Number2),
@@ -35,12 +38,10 @@ getPoints(6, Pontos) :-
   Pontos is 10.
 
 getIntervalo(LimiteBaixo, LimiteCima, Output) :-
-  read_line(Output),
-  write('Numero lido: '),
-  write(Output),
-  nl,
-  Output >= LimiteBaixo,
-  Output =< LimiteCima.
+  read_line(Choice),
+  extraiNumeroLista(Choice, Numero),
+  getNumber(Numero, Saida),
+  ite((Saida >= LimiteBaixo, Saida =< LimiteCima), Output = Saida, (write('\nInvalid choice!\n'), false)).
 
 verCasa(Tabuleiro, Y, X, Elemento) :-
   nth1(Y, Tabuleiro, YMatrix),
