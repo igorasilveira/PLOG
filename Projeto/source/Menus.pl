@@ -26,64 +26,64 @@ verificaMenu1([_ | _]) :-
   write('[ERROR] Invalid option, please choose 1 or 2\n\n'),
   false.
 
-  %- Gametype Menu -%
+%- Gametype Menu -%
 
-  menuGameMode :-
-    imprimeTitulo,
-    write('*************************\n'),
-    write('*    Player Mode Menu   *\n'),
-    write('*************************\n'),
-    novaLinha(2),
-    write('1: Player - Player\n'),
-    write('2: Player - Computer\n'),
-    write('3: Computer - Computer\n\n'),
-    repeat,
-    read_line(Choice),
-    verificaMenu2(Choice).
+menuGameMode :-
+  imprimeTitulo,
+  write('*************************\n'),
+  write('*    Player Mode Menu   *\n'),
+  write('*************************\n'),
+  novaLinha(2),
+  write('1: Player - Player\n'),
+  write('2: Player - Computer\n'),
+  write('3: Computer - Computer\n\n'),
+  repeat,
+  read_line(Choice),
+  verificaMenu2(Choice).
 
-    verificaMenu2([49 | _]) :-
-      limpaEcra,
-      menuGameType(1).
+  verificaMenu2([49 | _]) :-
+    limpaEcra,
+    menuGameType(1).
 
-    verificaMenu2([50 | _]) :-
-      limpaEcra,
-      menuGameType(2).
+  verificaMenu2([50 | _]) :-
+    limpaEcra,
+    menuGameType(2).
 
-      verificaMenu2([51 | _]) :-
-        limpaEcra,
-        menuGameType(3).
+  verificaMenu2([51 | _]) :-
+    limpaEcra,
+    menuGameType(3).
 
-    verificaMenu2([_ | _]) :-
-      nl,
-      write('[ERROR] Invalid option, please choose between 1 and 3\n\n'),
-      false.
+  verificaMenu2([_ | _]) :-
+    nl,
+    write('[ERROR] Invalid option, please choose between 1 and 3\n\n'),
+    false.
 
-      %- Difficulty Menu -%
+%- Difficulty Menu -%
 
-      menuGameType(ModoJogadores) :-
-        imprimeTitulo,
-        write('*************************\n'),
-        write('*     Type Game Menu    *\n'),
-        write('*************************\n'),
-        novaLinha(2),
-        write('1: Express\n'),
-        write('2: Expert\n\n'),
-        repeat,
-        read_line(Choice),
-        verificaMenu3(ModoJogadores, Choice).
+menuGameType(ModoJogadores) :-
+  imprimeTitulo,
+  write('*************************\n'),
+  write('*     Type Game Menu    *\n'),
+  write('*************************\n'),
+  novaLinha(2),
+  write('1: Express\n'),
+  write('2: Expert\n\n'),
+  repeat,
+  read_line(Choice),
+  verificaMenu3(ModoJogadores, Choice).
 
-        verificaMenu3(ModoJogadores, [49 | _]) :-
-          limpaEcra,
-          comecaJogo(ModoJogadores, 1).
+verificaMenu3(ModoJogadores, [49 | _]) :-
+  limpaEcra,
+  comecaJogo(ModoJogadores, 1).
 
-          verificaMenu3(ModoJogadores, [50 | _]) :-
-            limpaEcra,
-            comecaJogo(ModoJogadores, 2).
+verificaMenu3(ModoJogadores, [50 | _]) :-
+  limpaEcra,
+  comecaJogo(ModoJogadores, 2).
 
-        verificaMenu3([_ | _]) :-
-          nl,
-          write('[ERROR] Invalid option, please choose 1 or 2\n\n'),
-          false.
+verificaMenu3([_ | _]) :-
+  nl,
+  write('[ERROR] Invalid option, please choose 1 or 2\n\n'),
+  false.
 
 %------- JOGO ---------%
 
@@ -139,6 +139,26 @@ jogo(1, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
   insereBerlinde(Choice, 1, 2, Tabuleiro, 2, J1Pontos, J2Pontos),
   nl.
 
+%Player Vs Computer, Expert
+jogo(2, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
+  write('\nSelect your input cell (Q to exit) > '),
+  write('MODO: '),
+  repeat,
+  read_line(Choice),
+  insereBerlinde(Choice, 2, 2, Tabuleiro, 1, J1Pontos, J2Pontos),
+  nl.
+
+jogo(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro), 
+  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
+  random(65, 68, Letter),
+  random(48, 54, Number),
+  Choice = [67, 48],
+  insereBerlinde(Choice, 2, 2, Tabuleiro, 2, J1Pontos, J2Pontos),
+  nl.
+
 
 %Computer Vs Computer, Express
 
@@ -182,6 +202,19 @@ triggerSequenciaNaoDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   write('\nCell two > '),
   read_line(Choice2),
   processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+% -------- Player vs Computer [PLAYER] ------------
+triggerSequenciaNaoDiagonal(2, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
+  write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
+  repeat,
+  write('\nCell one > '),
+  read_line(Choice1),
+  write('\nCell two > '),
+  read_line(Choice2),
+  processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
 
 triggerSequenciaDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
   imprimeTabuleiro(Tabuleiro),
