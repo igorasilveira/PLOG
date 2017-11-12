@@ -151,7 +151,7 @@ jogo(2, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
   nl.
 
 jogo(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
-  imprimeTabuleiro(Tabuleiro), 
+  imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 2, J1Pontos, J2Pontos),
   random(65, 68, Letter),
   random(48, 54, Number),

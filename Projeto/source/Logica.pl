@@ -14,12 +14,23 @@ criaTabuleiro(1, Tabuleiro) :-
 criaTabuleiro(2, Tabuleiro) :-
 	Tabuleiro = [
 	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 1, 0],
-	[0, 0, 0, 0, 2, 0, 0],
-	[0, 0, 0, 2, 0, 0, 0],
+	[0, 0, 0, 0, 2, 0, 2],
+	[0, 0, 0, 2, 2, 0, 0],
 	[0, 0, 2, 0, 0, 0, 0],
 	[0, 2, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 1, 1, 0, 0, 0]
+].
+
+criaTabuleiro(3, Tabuleiro) :-
+	Tabuleiro = [
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 2, 0, 0, 0, 0, 0],
+	[0, 0, 2, 0, 0, 0, 0],
+	[0, 0, 0, 2, 0, 0, 0],
+	[0, 0, 0, 0, 2, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0]
 ].
 
 comecaJogo(ModoJogadores, TipoJogo) :-
@@ -317,25 +328,28 @@ verificaSequenciaDiagonalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pont
 
 %------------ BOT ---------------
 verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 7) :-
-	YInicial is Y - 6,
+	Y1 is Y + 2,
 	XInicial is X - 6,
-	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+	YFinal is Y1 + 6,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
 verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
-	YInicial is Y - 5,
+	Y1 is Y + 2,
 	XInicial is X - 5,
-	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+	YFinal is Y1 + 5,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
 verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
-	YInicial is Y - 4,
+	Y1 is Y + 2,
 	XInicial is X - 4,
-	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+	YFinal is Y1 + 4,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
 %------------ PLAYER ---------------
 verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 7) :-
 	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
-verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) :-
 	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
 verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) :-
@@ -432,19 +446,20 @@ removeBerlindesDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabul
 	removeBerlindesDiagonal(X1, XFinal, Y1, YFinal, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos, 1).
 
 removeBerlindesDiagonal(_, _, _, _, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1) :-
+	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 
 %-------- remoçao de berlindes diagonal -------------
 removeBerlindesDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2) :-
 	YInicial < YFinal,
-
-	updateBoard(3, YInicial, XFinal, Tabuleiro, Tabuleiro2),
-	Y1 is YInicial + 1,
 	X1 is XFinal - 1,
+	updateBoard(0, YInicial, X1, Tabuleiro, Tabuleiro2),
+	Y1 is YInicial + 1,
 	removeBerlindesDiagonal(X1, X1, Y1, YFinal, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos, 2).
 
 removeBerlindesDiagonal(_, _, _, _, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2) :-
+	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 %------------------ Tratamento  ----------------
@@ -463,10 +478,9 @@ removerHorizontal(XInicial, XFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pont
 
 removerDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
 	T is XFinal - XInicial,
-	write('ANTES\n'),
-	getPoints(T, Pontos),
-	write('DEPOIS\n'),
-	YFinalFinal is YFinal - 1,
+	T1 is abs(T),
+	getPoints(T1, Pontos),
 	XFinalFinal is XFinal - 1,
+	YFinalFinal is YFinal - 1,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	removeBerlindesDiagonal(XInicial, XFinalFinal, YInicial, YFinalFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado, Tipo).
