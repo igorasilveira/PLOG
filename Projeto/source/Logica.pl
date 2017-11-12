@@ -1,6 +1,6 @@
 :- use_module(library(random)).
 
-criaTabuleiro(Tabuleiro) :-
+criaTabuleiro(1, Tabuleiro) :-
 	Tabuleiro = [
 	[0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0],
@@ -11,8 +11,30 @@ criaTabuleiro(Tabuleiro) :-
 	[0, 0, 0, 0, 0, 0, 0]
 ].
 
+criaTabuleiro(2, Tabuleiro) :-
+	Tabuleiro = [
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 2, 0, 2],
+	[0, 0, 0, 2, 2, 0, 0],
+	[0, 0, 2, 0, 0, 0, 0],
+	[0, 2, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 1, 1, 1, 0, 0, 0]
+].
+
+criaTabuleiro(3, Tabuleiro) :-
+	Tabuleiro = [
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 2, 0, 0, 0, 0, 0],
+	[0, 0, 2, 0, 0, 0, 0],
+	[0, 0, 0, 2, 0, 0, 0],
+	[0, 0, 0, 0, 2, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0]
+].
+
 comecaJogo(ModoJogadores, TipoJogo) :-
-  criaTabuleiro(Tabuleiro),
+  criaTabuleiro(2, Tabuleiro),
   Jogador is 1,
   jogo(TipoJogo, ModoJogadores, Tabuleiro, Jogador, 0, 0).
 
@@ -115,10 +137,10 @@ verificaSequencia(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Ponto
 	Pontos = _,
 	verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 1, 0),
 	verificaSequenciaHorizontalDireita(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 8, 1, 0),
-	verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 8, 0),
 	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 0, 0),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos),
+	verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 8, 0),
 	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos),
 	write('PASSA TODAS VERIFICACOES\n'),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(TipoJogo, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
@@ -130,33 +152,57 @@ verificaSequenciaHorizontalEsquerda(1, ModoJogadores, Tabuleiro, Jogador, J1Pont
 	trocaJogador(Jogador, NovoJogador),
 	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
-%-------------------- verifica sequencia horizontal (esquerda para direita) [EXPRESS]---------------
-verificaSequenciaHorizontalDireita(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, _, _, 5) :-
-	Pontos = 5,
-	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	trocaJogador(Jogador, NovoJogador),
-	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
-
 %-------------------- verifica sequencia vertical (esquerda para direita) [EXPERT]---------------
-verificaSequenciaHorizontalEsquerda(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5) :-
+%---------- Modo BOT ------------------
+verificaSequenciaHorizontalEsquerda(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 7) :-
+	XInicial is X - 6,
+ 	removerHorizontal(XInicial, X, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalEsquerda(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	XInicial is X - 5,
+ 	removerHorizontal(XInicial, X, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalEsquerda(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	XInicial is X - 4,
+ 	removerHorizontal(XInicial, X, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+%------------- Player ---------------
+verificaSequenciaHorizontalEsquerda(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 7).
 	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
-verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 0, 7, 0).
+verificaSequenciaHorizontalEsquerda(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6).
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalEsquerda(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 0, 8, 0).
 
 verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador) :-
-	X < 7,
+	X < 8,
 	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
 	X1 is X + 1,
-	verCasa(Tabuleiro, Y, X1, NovaPeca),
-	verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, X1, Y, Contador1).
+	ite((verCasa(Tabuleiro, Y, X1, NovaPeca), NovaPeca == Jogador), NovaPecaFinal is NovaPeca, NovaPecaFinal is 0),
+	verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPecaFinal, X1, Y, Contador1).
 
 verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, _, Y, Contador) :-
-	Y < 7,
+	Y < 8,
 	Y1 is Y + 1,
 	verificaSequenciaHorizontalEsquerda(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, Y1, 0).
 
 %-------------- TRIGGER pedido remoção linha --------------------
-verificaSequenciaHorizontalDireita(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, Pontos, X, Y, 5) :-
+
+verificaSequenciaHorizontalDireita(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	XFinal is X + 5,
+ 	removerHorizontal(X, XFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalDireita(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	XFinal is X + 4,
+ 	removerHorizontal(X, XFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalDireita(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) .
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaHorizontalDireita(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) .
 	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %-------------------- verifica sequencia vertical (esquerda para direita) [EXPERT]---------------
@@ -182,21 +228,41 @@ verificaSequenciaVerticalDescendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pon
 	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
 %-------------- TRIGGER pedido remoção coluna --------------------
-verificaSequenciaVerticalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5) :-
+
+%---------- Modo BOT ------------------
+verificaSequenciaVerticalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 7) :-
+	YInicial is Y - 6,
+ 	removerVertical(YInicial, Y, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	YInicial is Y - 5,
+ 	removerVertical(YInicial, Y, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	YInicial is Y - 4,
+ 	removerVertical(YInicial, Y, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+%------------- Player ---------------
+verificaSequenciaVerticalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 7) .
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) .
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) .
 	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 %-------------------- verifica sequencia vertical (cima para baixo) ---------------
-verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 7, 0, 0).
+verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 8, 0, 0).
 
 verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador) :-
-	Y < 7,
+	Y < 8,
 	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
 	Y1 is Y + 1,
-	verCasa(Tabuleiro, Y1, X, NovaPeca),
-	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, X, Y1, Contador1).
+	ite((verCasa(Tabuleiro, Y1, X, NovaPeca), NovaPeca == Jogador), NovaPecaFinal is NovaPeca, NovaPecaFinal is 0),
+	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPecaFinal, X, Y1, Contador1).
 
 verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, _, Contador) :-
-	X < 7,
+	X < 8,
 	X1 is X + 1,
 	verificaSequenciaVerticalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X1, 0, 0).
 
@@ -208,10 +274,23 @@ verificaSequenciaVerticalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pont
 	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
 %-------------------- verifica sequencia vertical (baixo para cima) ---------------
-verificaSequenciaVerticalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5) :-
+%------------ BOT ---------------
+verificaSequenciaVerticalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	YFinal is Y + 5,
+ 	removerVertical(Y, YFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	YFinal is Y + 4,
+ 	removerVertical(Y, YFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+%------------ PLAYER ---------------
+verificaSequenciaVerticalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) .
 	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
-verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 7, 8, Contador).
+verificaSequenciaVerticalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) .
+	triggerSequenciaNaoDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos).
+
+verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, 7, 1, Contador).
 
 verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador) :-
 	Y > 1,
@@ -226,70 +305,115 @@ verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador,
 	verificaSequenciaVerticalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X1, 8, 0).
 
 verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 7, 0, 7, 1),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 7, 0, 6, 1),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 6, 0, 6, 0),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 8, 0, 7, 2),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 8, 0, 8, 2),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 6, 0, 8, 0),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 6, 0, 7, 0),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 7, 0, 8, 1),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 8, 0, 7, 1).
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 7, 0),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 6, 0),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 8, 0),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 8, 0),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 8, 0).
 
 verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 1, 0, 7, 7),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 1, 0, 6, 7),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 2, 0, 6, 8),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 0, 0, 7, 6),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 0, 0, 8, 6),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 1, 0, 8, 8),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 2, 0, 7, 8),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 2, 0, 8, 8),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 0, 0, 7, 7).
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 1, 0),
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 2, 0),
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 1, 0, 0),
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 2, 0, 0),
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, 0, 0, 0).
 
 
 %-------------------- verifica sequencia diagonal (baixo para cima) ---------------
-verificaSequenciaDiagonalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5, _, _) :-
+verificaSequenciaDiagonalAscendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5) :-
 	Pontos = 5,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
-verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5, _, _) :-
+%------------ BOT ---------------
+verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 7) :-
+	Y1 is Y + 2,
+	XInicial is X - 6,
+	YFinal is Y1 + 6,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+
+verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	Y1 is Y + 2,
+	XInicial is X - 5,
+	YFinal is Y1 + 5,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+
+verificaSequenciaDiagonalAscendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	Y1 is Y + 2,
+	XInicial is X - 4,
+	YFinal is Y1 + 4,
+	removerDiagonal(XInicial, X, Y1, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+
+%------------ PLAYER ---------------
+verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 7) :-
 	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
 
-verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador, XLimite, YLimite) :-
-	Y > YLimite,
-	X < XLimite,
+verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+
+verificaSequenciaDiagonalAscendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2).
+
+verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, 8, 0, 0).
+
+verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador) :-
+	Y > 0,
+	X < 8,
 	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
 	Y1 is Y - 1,
 	X1 is X + 1,
-	ite(verCasa(Tabuleiro, Y1, X1, NovaPeca), true, true),
-	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, X1, Y1, Contador1, XLimite, YLimite).
+	ite((verCasa(Tabuleiro, Y1, X1, NovaPeca), NovaPeca == Jogador), NovaPecaFinal is NovaPeca, NovaPecaFinal is 0),
+	verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPecaFinal, X1, Y1, Contador1).
 
-verificaSequenciaDiagonalAscendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, _, XLimite, YLimite).
+	verificaSequenciaDiagonalAscendente(_, _, _, _, _, _, 0, _, _, _).
 
 %-------------------- verifica sequencia diagonal (cima para baixo) ---------------
 
-verificaSequenciaDiagonalDescendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5, _, _) :-
+verificaSequenciaDiagonalDescendente(1, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5) :-
 	Pontos = 5,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	trocaJogador(Jogador, NovoJogador),
 	jogo(1, ModoJogadores, Tabuleiro, NovoJogador, J1PontosAtualizado, J2PontosAtualizado).
 
-verificaSequenciaDiagonalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, 5, _, _) :-
+%------------ BOT ---------------
+verificaSequenciaDiagonalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 7) :-
+	YInicial is Y - 6,
+	XInicial is X - 6,
+	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
+
+verificaSequenciaDiagonalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	YInicial is Y - 5,
+	XInicial is X - 5,
+	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
+
+verificaSequenciaDiagonalDescendente(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	YInicial is Y - 4,
+	XInicial is X - 4,
+	removerDiagonal(XInicial, X, YInicial, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
+
+%------------ PLAYER ---------------
+verificaSequenciaDiagonalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 7) :-
 	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
 
-verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador, XLimite, YLimite) :-
-	Y < YLimite,
-	X < XLimite,
+verificaSequenciaDiagonalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 6) :-
+	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
+
+verificaSequenciaDiagonalDescendente(2, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 0, X, Y, 5) :-
+	triggerSequenciaDiagonal(ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1).
+
+verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, 8, 8, 0).
+
+verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Peca, X, Y, Contador) :-
+	Y < 8,
+	X < 8,
 	ite(Peca == Jogador, Contador1 is Contador + 1, Contador1 is 0),
 	Y1 is Y + 1,
 	X1 is X + 1,
-	ite(verCasa(Tabuleiro, Y1, X1, NovaPeca), true, true),
-	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPeca, X1, Y1, Contador1, XLimite, YLimite).
+	ite((verCasa(Tabuleiro, Y1, X1, NovaPeca), NovaPeca == Jogador), NovaPecaFinal is NovaPeca, NovaPecaFinal is 0),
+	verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, NovaPecaFinal, X1, Y1, Contador1).
 
-verificaSequenciaDiagonalDescendente(TipoJogo, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, _, X, Y, _, XLimite, YLimite).
+verificaSequenciaDiagonalDescendente(_, _, _, _, _, _, 0, _, _, _).
 
 %-------- remoçao de berlindes horizontal -------------
 removeBerlindesHorizontal(X, Y, XLimite, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
@@ -313,21 +437,8 @@ removeBerlindesVertical(Y, X, YLimite, ModoJogadores, Tabuleiro, Jogador, J1Pont
 
 %-------- remoçao de berlindes diagonal -------------
 removeBerlindesDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1) :-
-write('--------------------------------------\n'),
-	write('XInicial: '),
-	write(XInicial),
-	nl,
-	write('XFinal: '),
-	write(XFinal),
-	nl,
-	write('YInicial: '),
-	write(YInicial),
-	nl,
-	write('YFinalFinal: '),
-	write(YFinal),
-	nl,
-	YInicial < YFinal + 1,
-	XInicial < XFinal + 1,
+	YInicial < YFinal,
+	XInicial < XFinal,
 
 	updateBoard(0, YInicial, XInicial, Tabuleiro, Tabuleiro2),
 	Y1 is YInicial + 1,
@@ -335,19 +446,20 @@ write('--------------------------------------\n'),
 	removeBerlindesDiagonal(X1, XFinal, Y1, YFinal, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos, 1).
 
 removeBerlindesDiagonal(_, _, _, _, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 1) :-
+	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 
 %-------- remoçao de berlindes diagonal -------------
 removeBerlindesDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2) :-
-	YInicial < YFinal + 1,
-
-	updateBoard(0, YInicial, XFinal, Tabuleiro, Tabuleiro2),
-	Y1 is YInicial + 1,
+	YInicial < YFinal,
 	X1 is XFinal - 1,
+	updateBoard(0, YInicial, X1, Tabuleiro, Tabuleiro2),
+	Y1 is YInicial + 1,
 	removeBerlindesDiagonal(X1, X1, Y1, YFinal, ModoJogadores, Tabuleiro2, Jogador, J1Pontos, J2Pontos, 2).
 
 removeBerlindesDiagonal(_, _, _, _, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, 2) :-
+	trocaJogador(Jogador, NovoJogador),
 	jogo(2, ModoJogadores, Tabuleiro, NovoJogador, J1Pontos, J2Pontos).
 
 %------------------ Tratamento  ----------------
@@ -361,18 +473,14 @@ removerVertical(YInicial, YFinal, X, ModoJogadores, Tabuleiro, Jogador, J1Pontos
 removerHorizontal(XInicial, XFinal, Y, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
 	OutroXLimite is XFinal - 1,
 	T is XFinal - XInicial,
-	getPoints(T, Pontos),
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
 	removeBerlindesHorizontal(XInicial, Y, OutroXLimite, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado).
 
 removerDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
 	T is XFinal - XInicial,
-	write('XXXXXXXINICIAl: '),
-	write(XInicial),
-	nl,
-	write('XXXXXFINAL: '),
-	write(XFinal),
-	nl,
-	getPoints(T, Pontos),
+	T1 is abs(T),
+	getPoints(T1, Pontos),
+	XFinalFinal is XFinal - 1,
+	YFinalFinal is YFinal - 1,
 	atualizaPontos(Jogador, J1Pontos, J2Pontos, Pontos, J1PontosAtualizado, J2PontosAtualizado),
-	removeBerlindesDiagonal(XInicial, XFinal, YInicial, YFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado, Tipo).
+	removeBerlindesDiagonal(XInicial, XFinalFinal, YInicial, YFinalFinal, ModoJogadores, Tabuleiro, Jogador, J1PontosAtualizado, J2PontosAtualizado, Tipo).

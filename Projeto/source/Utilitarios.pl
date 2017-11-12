@@ -30,13 +30,13 @@ getSmaller([Number1 | T], [Number2 | T], SmallerNumber, LargerNumber) :-
   write('B\n'),
 	ite(FirstNumber < SecondNumber, (SmallerNumber is FirstNumber, LargerNumber is SecondNumber), (SmallerNumber is SecondNumber, LargerNumber is FirstNumber)).
 
-getPoints(2, Pontos) :-
+getPoints(4, Pontos) :-
   Pontos is 2.
 
-getPoints(3, Pontos) :-
+getPoints(5, Pontos) :-
   Pontos is 5.
 
-getPoints(4, Pontos) :-
+getPoints(6, Pontos) :-
   Pontos is 10.
 
 getIntervalo(LimiteBaixo, LimiteCima, Output) :-
