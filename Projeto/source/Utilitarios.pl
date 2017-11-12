@@ -24,10 +24,8 @@ getNumber(NumberIn, NumberFinal) :-
 	NumberFinal is Number + 1.
 
 getSmaller([Number1 | T], [Number2 | T], SmallerNumber, LargerNumber) :-
-  write('A\n'),
 	getNumber(Number1, FirstNumber),
 	getNumber(Number2, SecondNumber),
-  write('B\n'),
 	ite(FirstNumber < SecondNumber, (SmallerNumber is FirstNumber, LargerNumber is SecondNumber), (SmallerNumber is SecondNumber, LargerNumber is FirstNumber)).
 
 getPoints(4, Pontos) :-

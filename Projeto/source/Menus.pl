@@ -98,12 +98,17 @@ jogo(1, _, Tabuleiro, _, 0, 5) :-
   informaVitoria(2),
   menuPrincipal.
 
-jogo(2, _, Tabuleiro, _, 10, _) :-
+jogo(2, _, Tabuleiro, _, P1, _) :-
+  P1 >= 10,
+  write('PI: '),
+  write(P1),
+  nl,
   imprimeTabuleiro(Tabuleiro),
   informaVitoria(1),
   menuPrincipal.
 
-jogo(2, _, Tabuleiro, _, _, 10) :-
+jogo(2, _, Tabuleiro, _, _, P2) :-
+  P2 >= 10,
   imprimeTabuleiro(Tabuleiro),
   informaVitoria(2),
   menuPrincipal.
@@ -113,72 +118,52 @@ jogo(2, _, Tabuleiro, _, _, 10) :-
 %Player Vs Player, Express
 jogo(1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
+  repeat,
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\nSelect your input cell (Q to exit) > '),
-  repeat,
   read_line(Choice),
+  tabuleiroMorto(Tabuleiro),
+  jogadaValida(Tabuleiro, Choice),
   insereBerlinde(Choice, 1, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
 
 %Player Vs Computer, Express
 jogo(1, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
-  write('\nSelect your input cell (Q to exit) > '),
+  informaJogador(1, 2, J1Pontos, J2Pontos),
   repeat,
+  write('\nSelect your input cell (Q to exit) > '),
   read_line(Choice),
+  jogadaValida(Tabuleiro, Choice),
   insereBerlinde(Choice, 1, 2, Tabuleiro, 1, J1Pontos, J2Pontos),
   nl.
 
 jogo(1, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
+  informaJogador(2, 2, J1Pontos, J2Pontos),
+  repeat,
+  sleep(1),
   random(65, 68, Letter),
   random(48, 54, Number),
   Choice = [Letter, Number],
+  jogadaValida(Tabuleiro, Choice),
   insereBerlinde(Choice, 1, 2, Tabuleiro, 2, J1Pontos, J2Pontos),
-  nl.
-
-%Player Vs Computer, Expert
-jogo(2, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
-  imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
-  write('\nSelect your input cell (Q to exit) > '),
-  write('MODO: '),
-  repeat,
-  read_line(Choice),
-  insereBerlinde(Choice, 2, 2, Tabuleiro, 1, J1Pontos, J2Pontos),
-  nl.
-
-jogo(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
-  imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 2, J1Pontos, J2Pontos),
-  random(65, 68, Letter),
-  random(48, 54, Number),
-  Choice = [67, 48],
-  insereBerlinde(Choice, 2, 2, Tabuleiro, 2, J1Pontos, J2Pontos),
   nl.
 
 
 %Computer Vs Computer, Express
-
 jogo(1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 3),
+  informaJogador(Jogador, 3, J1Pontos, J2Pontos),
+  repeat,
+  sleep(1),
   random(65, 68, Letter),
   random(48, 54, Number),
   Choice = [Letter, Number],
+  jogadaValida(Tabuleiro, Choice),
   insereBerlinde(Choice, 1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
 
-jogo(1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-  imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 3),
-  random(65, 68, Letter),
-  random(48, 54, Number),
-  Choice = [Letter, Number],
-  insereBerlinde(Choice, 1, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos),
-  nl.
 
 %----------------EXPERT------------------------
 %Player Vs Player, Express
@@ -188,23 +173,12 @@ jogo(2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   repeat,
   write('\nSelect your input cell (Q to exit) > '),
   read_line(Choice),
+  jogadaValida(Tabuleiro, Choice),
   insereBerlinde(Choice, 2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos),
   nl.
 
-%---------- Trigger sequencia ------------------
-triggerSequenciaNaoDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
-  imprimeTabuleiro(Tabuleiro),
-  informaJogador(Jogador, 1, J1Pontos, J2Pontos),
-  write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
-  repeat,
-  write('\nCell one > '),
-  read_line(Choice1),
-  write('\nCell two > '),
-  read_line(Choice2),
-  processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
-
-% -------- Player vs Computer [PLAYER] ------------
-triggerSequenciaNaoDiagonal(2, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+%---------- Trigger sequencia [PLAYER vs PLAYER]------------------
+triggerSequenciaNaoDiagonal(Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\n[ATTENTION] Sequence detected, you must remove it to retrieve your points!\n\n'),
@@ -216,7 +190,8 @@ triggerSequenciaNaoDiagonal(2, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
   processaRemocao(Choice1, Choice2, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos).
 
 
-triggerSequenciaDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
+%------------- Diagonal [PLAYER vs PLAYER] -----------------
+triggerSequenciaDiagonal(Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
   imprimeTabuleiro(Tabuleiro),
   informaJogador(Jogador, 1, J1Pontos, J2Pontos),
   write('\n[ATTENTION] Diagonal sequence detected, you must remove it to retrieve your points!\n\n'),
@@ -231,6 +206,41 @@ triggerSequenciaDiagonal(1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo) :-
   read_line(Choice4),
   processaRemocao(Choice1, Choice2, Choice3, Choice4, 1, Tabuleiro, Jogador, J1Pontos, J2Pontos, Tipo).
 
+
+  %Player Vs Computer, Expert
+jogo(2, 2, Tabuleiro, 1, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(1, 2, J1Pontos, J2Pontos),
+  repeat,
+  write('\nSelect your input cell (Q to exit) > '),
+  read_line(Choice),
+  jogadaValida(Tabuleiro, Choice),
+  insereBerlinde(Choice, 2, 2, Tabuleiro, 1, J1Pontos, J2Pontos),
+  nl.
+
+jogo(2, 2, Tabuleiro, 2, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(2, 2, J1Pontos, J2Pontos),
+  repeat,
+  random(65, 68, Letter),
+  random(48, 54, Number),
+  Choice = [Letter, Number],
+  jogadaValida(Tabuleiro, Choice),
+  insereBerlinde(Choice, 2, 2, Tabuleiro, 2, J1Pontos, J2Pontos),
+  nl.
+
+%Computer Vs Computer, Expert
+jogo(2, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos) :-
+  imprimeTabuleiro(Tabuleiro),
+  informaJogador(Jogador, 3, J1Pontos, J2Pontos),
+  repeat,
+  sleep(1),
+  random(65, 68, Letter),
+  random(48, 54, Number),
+  Choice = [Letter, Number],
+  jogadaValida(Tabuleiro, Choice),
+  insereBerlinde(Choice, 2, 3, Tabuleiro, Jogador, J1Pontos, J2Pontos),
+  nl.
 %--------------- Pedir linha ------------------
 pedirColunaLinhaRemocao(1, Numero) :-
   repeat,
