@@ -50,7 +50,10 @@ tamanhoTabuleiro([H | T], XLimite, YLimite) :-
 		tamanhoLista(T, Tamanho),
 		YLimite is Tamanho + 1.
 
-reset_timer :- statistics(walltime,_).	
+subLista(L, M, N, S) :-
+    findall(E, (nth1(I, L, E), I >= M, I =< N), S).
+
+reset_timer :- statistics(walltime,_).
 print_time :-
 	statistics(walltime,[_,T]),
 	TS is ((T//10)*10)/1000,

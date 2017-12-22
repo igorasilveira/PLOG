@@ -128,28 +128,11 @@ resolvePuzzle(_Tamanho) :-
   print_time,
   esperaTecla, menuPrincipal.
 
-mostraResolucao(3, Valores) :-
-  imprimeTitulo,
-  criaTriad(3, Tabuleiro, Posicoes),
-  insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
-  imprimeTabuleiro(NovoTabuleiro).
-
-mostraResolucao(5, Valores) :-
-  imprimeTitulo,
-  criaTriad(5, Tabuleiro, Posicoes),
-  insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
-  imprimeTabuleiro(NovoTabuleiro).
-
-mostraResolucao(7, Valores) :-
-  imprimeTitulo,
-  criaTriad(7, Tabuleiro, Posicoes),
-  insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
-  imprimeTabuleiro(NovoTabuleiro).
-
 mostraResolucao(_Tamanho, Valores) :-
   imprimeTitulo,
-  write('[NOTICE] So far we only have a graphical representation\nfor the 3x3, 5x5 and 7x7 Triads.'),
+  write('    Solution for '), write(_Tamanho), write('x'),
+  write(_Tamanho), write(' Triad'),
   novaLinha(2),
-  %imprimeLista(_Tamanho, Valores).
-  write(Valores),
+  imprimeLista(Valores, 1, 1, _Tamanho),
+  %write(Valores),
   novaLinha(2).
