@@ -2,80 +2,6 @@
 :- use_module(library(clpfd)).
 :- use_module(library(random)).
 
-criaTriad(3, Tabuleiro, Posicoes) :-
-  Tabuleiro = [
-  %linha 1
-  [-1, -1, 0, -1, -1],
-  %[-1, -1, -2, -1, -1],
-  %linha 2
-  [-1, 0, -1, 0, -1],
-  %[-1, -2, -1, -2, -1],
-  %linha 3
-  [0, -1, 0, -1, 0]
-  ],
-  Posicoes = [
-  [0, 2],
-  [1, 1], [1, 3],
-  [2, 0], [2, 2], [2, 4]
-  ].
-
-criaTriad(5, Tabuleiro, Posicoes) :-
-  Tabuleiro = [
-  %linha 1
-  [-1, -1, -1, -1, 0, -1, -1, -1, -1],
-  %[-1, -1, -1, -1, -2, -1, -1, -1, -1],
-  %linha 2
-  [-1, -1, -1, 0, -1, 0, -1, -1, -1],
-  %[-1, -1, -1, -2, -2, -2, -1, -1, -1],
-  %linha 3
-  [-1, -1, 0, -1, 0, -1, 0, -1, -1],
-  %[-1, -1, -2, -2, -2, -2, -2, -1, -1],
-  %linha 4
-  [-1, 0, -1, 0, -1, 0, -1, 0, -1],
-  %[-1, -2, -2, -2, -2, -2, -2, -2, -1],
-  %linha 5
-  [0, -1, 0, -1, 0, -1, 0, -1, 0]
-  ],
-  Posicoes = [
-  [0, 4],
-  [1, 3], [1, 5],
-  [2, 2], [2, 4], [2, 6],
-  [3, 1], [3, 3], [3, 5], [3, 7],
-  [4, 0], [4, 2], [4, 4], [4, 6], [4, 8]
-  ].
-
-criaTriad(7, Tabuleiro, Posicoes) :-
-  Tabuleiro = [
-  %linha 1
-  [-1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1],
-  %[-1, -1, -1, -1, -1, -1, -2, -1, -1, -1, -1, -1, -1],
-  %linha 2
-  [-1, -1, -1, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1],
-  %[-1, -1, -1, -1, -1, -2, -2, -2, -1, -1, -1, -1, -1],
-  %linha 3
-  [-1, -1, -1, -1, 0, -1, 0, -1, 0, -1, -1, -1, -1],
-  %[-1, -1, -1, -1, -2, -2, -2, -2, -2, -1, -1, -1, -1],
-  %linha 4
-  [-1, -1, -1, 0, -1, 0, -1, 0, -1, 0, -1, -1, -1],
-  %[-1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1],
-  %linha 5
-  [-1, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, -1],
-  %[-1, -1, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1],
-  %linha 6
-  [-1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1],
-  %[-1, -2, -1, -2, -1, 0, -1, -2, -1, 0, -1, -2, -1],
-  %linha 7
-  [0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0]
-  ],
-  Posicoes = [
-  [1, 6],
-  [3, 5], [3, 6], [3, 7],
-  [5, 4], [5, 5], [5, 6], [5, 7], [5, 8],
-  [7, 3], [7, 4], [7, 5], [7, 6], [7, 7], [7, 8], [7, 9],
-  [9, 2], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [9, 9], [9, 10],
-  [11, 1], [11, 2], [11, 3], [11, 4], [11, 5], [11, 6], [11, 7], [11, 8], [11, 9], [11, 10], [11, 11]
-  ].
-
 % Faz update a Board
 updateTo(_,[],[],_,_).
 updateTo(ElemToChange,[[_|Xs]|Ys],[[ElemToChange|Xs1]|Ys1],0,0) :-
@@ -117,53 +43,34 @@ geraNumeros(Tabuleiro, [H|T], Out) :-
   updateBoard(Numero, Y, X, Tabuleiro, NovoTabuleiro),
   geraNumeros(NovoTabuleiro, T, Out).
 
-calculaSolucao(5, Valores) :-
-  Valores = [V1,V2,V3,V4,V5,V6,V7,V8,V9,V10,V11,V12,V13,V14,V15],
-  domain(Valores, 1, 5),
-  V1 #\= V2, V1 #\= V3, V1 #\= V4, V1 #\= V6, V1 #\= V7, V1 #\= V10, V1 #\= V11, V1 #\= V15,
-  V2 #\= V3, V2 #\= V4, V2 #\= V5, V2 #\= V7, V2 #\= V9, V2 #\= V11, V2 #\= V13,
-  V4 #\= V5, V4 #\= V6, V4 #\= V7, V4 #\= V8, V4 #\= V11, V4 #\= V13,
-  V5 #\= V6, V5 #\= V8, V5 #\= V9, V5 #\= V12, V5 #\= V14,
-  V6 #\= V9, V6 #\= V10, V6 #\= V13, V6 #\= V15,
-  V7 #\= V8, V7 #\= V9, V7 #\= V10, V7 #\= V11, V7 #\= V12,
-  V8 #\= V9, V8 #\= V10, V8 #\= V12, V8 #\= V13,
-  V9 #\= V10, V9 #\= V13, V9 #\= V14,
-  V10 #\= V14, V10 #\= V15,
-  V11 #\= V12, V11 #\= V13, V11 #\= V14, V11 #\= V15,
-  V12 #\= V13, V12 #\= V14, V12 #\= V15,
-  V13 #\= V14, V13 #\= V15,
-  V14 #\= V15,
-  labeling([], Valores).
-
 calculaSolucao(Valores, _Tamanho) :-
   _Celulas is floor((exp(_Tamanho, 2) + _Tamanho) / 2),
   length(Valores, _Celulas),
   domain(Valores, 1, _Tamanho),
-  write('Valores: '), write(Valores), nl,
-  X is _Tamanho + 1,
   constrainLinhas(Valores, 1, 1, _Celulas, _Tamanho),
   constrainDiagonais(Valores, 1, 1, _Celulas, _Tamanho),
   labeling([], Valores).
 
+%corre linha a linha - ex nós 1, 2, 4, 7
 constrainLinhas(Valores, K, Index, Celulas, Tamanho) :-
   Index =< Celulas - (Tamanho - 1),
-    write('Index: '), write(Index),
-    write('  K: '), write(K), nl,
   Index1 is Index + K,
   K1 is K + 1,
   restricaoLinhaCompleta(Valores, 1, K, Index),
   constrainLinhas(Valores, K1, Index1, Celulas, Tamanho).
 
 constrainLinhas(_, _, _, _, _).
+
 %percorre todos os K nós da linha
-restricaoLinhaCompleta(_, K, K, _).
+restricaoLinhaCompleta(_, _, 0, _).
 
 restricaoLinhaCompleta(Valores, Contador, K, Index) :-
   nth1(Index, Valores, V1), %no a ser tratado
   Next is Index + 1,
-  auxLinhaCompleta(V1, Valores, 0, K, Index), %constringe a linha
+  auxLinhaCompleta(V1, Valores, 1, K, Index), %constringe a linha
   Contador1 is Contador + 1,
-  restricaoLinhaCompleta(Valores, Contador1, K, Next).
+  K1 is K - 1,
+  restricaoLinhaCompleta(Valores, Contador1, K1, Next).
 
 auxLinhaCompleta(_, _, Final, Final, _).
 auxLinhaCompleta(V1, Valores, Contador, K, Index) :-
@@ -212,10 +119,35 @@ insereValores(Tabuleiro, [PosHead | PosTail], [ValHead | ValTail], Out) :-
   insereValores(NovoTabuleiro, PosTail, ValTail, Out).
 
 resolvePuzzle(_Tamanho) :-
-  criaTriad(_Tamanho, Tabuleiro, Posicoes),
-  %imprimeTabuleiro(Tabuleiro),
+  imprimeTitulo,
+  nl,
+  write('Solving '), write(_Tamanho) ,write('x'), write(_Tamanho) , write(' Triad'), nl,
   calculaSolucao(Valores, _Tamanho),
-  %calculaSolucao(_Tamanho, Valores),
-  %write(Valores).
+  mostraResolucao(_Tamanho, Valores),
+  esperaTecla, menuPrincipal.
+
+mostraResolucao(3, Valores) :-
+  imprimeTitulo,
+  criaTriad(3, Tabuleiro, Posicoes),
   insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
   imprimeTabuleiro(NovoTabuleiro).
+
+mostraResolucao(5, Valores) :-
+  imprimeTitulo,
+  criaTriad(5, Tabuleiro, Posicoes),
+  insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
+  imprimeTabuleiro(NovoTabuleiro).
+
+mostraResolucao(7, Valores) :-
+  imprimeTitulo,
+  criaTriad(7, Tabuleiro, Posicoes),
+  insereValores(Tabuleiro, Posicoes, Valores, NovoTabuleiro),
+  imprimeTabuleiro(NovoTabuleiro).
+
+mostraResolucao(_Tamanho, Valores) :-
+  imprimeTitulo,
+  write('[NOTICE] So far we only have a graphical representation\nfor the 3x3, 5x5 and 7x7 Triads.'),
+  novaLinha(2),
+  %imprimeLista(_Tamanho, Valores).
+  write(Valores),
+  novaLinha(2).

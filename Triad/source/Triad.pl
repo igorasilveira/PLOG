@@ -1,7 +1,8 @@
 :- include('Utilitarios.pl').
+:- include('Menus.pl').
 :- include('Interface.pl').
 :- include('Logica.pl').
 
-triad(_Modo) :-
+triad :-
   limpaEcra,
-  resolvePuzzle(_Modo).
+  menuPrincipal.

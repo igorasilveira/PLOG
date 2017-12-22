@@ -14,6 +14,10 @@ novaLinha(_,_).
 
 limpaEcra :- novaLinha(50), !.
 
+esperaTecla :-
+  write('\nEnter anything and "." + ENTER to continue > '),
+  read(_Choice).
+
 extraiNumeroLista([H | _T], Numero) :-
   Numero is H.
 
@@ -21,18 +25,13 @@ getNumber(NumberIn, NumberFinal) :-
 	char_code(Number1, NumberIn),
 	atom_chars(Number1, Number2),
 	number_chars(Number, Number2),
-	NumberFinal is Number + 1.
-
-verCasa(Tabuleiro, Y, X, Elemento) :-
-  nth1(Y, Tabuleiro, YMatrix),
-  nth1(X, YMatrix, Elemento).
+	NumberFinal is Number.
 
 ite(If, Then, _) :-
   If, !, Then.
 
 ite(_, _, Else) :-
   Else.
-
 
 tamanhoLista(Lista, Conta):-
 		X = _,
@@ -50,6 +49,3 @@ tamanhoTabuleiro([H | T], XLimite, YLimite) :-
 		tamanhoLista(H, XLimite),
 		tamanhoLista(T, Tamanho),
 		YLimite is Tamanho + 1.
-
-subLista(List, From, Count, SubList) :-
-    findall(E, (nth1(I, List, E), I >= From, I < From + Count), SubList).
