@@ -122,8 +122,10 @@ resolvePuzzle(_Tamanho) :-
   imprimeTitulo,
   nl,
   write('Solving '), write(_Tamanho) ,write('x'), write(_Tamanho) , write(' Triad'), nl,
+  reset_timer,
   calculaSolucao(Valores, _Tamanho),
   mostraResolucao(_Tamanho, Valores),
+  print_time,
   esperaTecla, menuPrincipal.
 
 mostraResolucao(3, Valores) :-

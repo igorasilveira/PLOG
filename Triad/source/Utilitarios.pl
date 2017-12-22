@@ -49,3 +49,9 @@ tamanhoTabuleiro([H | T], XLimite, YLimite) :-
 		tamanhoLista(H, XLimite),
 		tamanhoLista(T, Tamanho),
 		YLimite is Tamanho + 1.
+
+reset_timer :- statistics(walltime,_).	
+print_time :-
+	statistics(walltime,[_,T]),
+	TS is ((T//10)*10)/1000,
+	nl, write('Solution Time: '), write(TS), write('s'), nl, nl.
