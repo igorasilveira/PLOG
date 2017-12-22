@@ -147,6 +147,8 @@ calculaSolucao(Valores, _Tamanho) :-
 
 constrainLinhas(Valores, K, Index, Celulas, Tamanho) :-
   Index =< Celulas - (Tamanho - 1),
+    write('Index: '), write(Index),
+    write('  K: '), write(K), nl,
   Index1 is Index + K,
   K1 is K + 1,
   restricaoLinhaCompleta(Valores, 1, K, Index),
@@ -155,6 +157,7 @@ constrainLinhas(Valores, K, Index, Celulas, Tamanho) :-
 constrainLinhas(_, _, _, _, _).
 %percorre todos os K nós da linha
 restricaoLinhaCompleta(_, K, K, _).
+
 restricaoLinhaCompleta(Valores, Contador, K, Index) :-
   nth1(Index, Valores, V1), %no a ser tratado
   Next is Index + 1,
@@ -165,7 +168,7 @@ restricaoLinhaCompleta(Valores, Contador, K, Index) :-
 auxLinhaCompleta(_, _, Final, Final, _).
 auxLinhaCompleta(V1, Valores, Contador, K, Index) :-
   Contador1 is Contador + 1,
-  NextRight is Index + Contador1,
+  NextRight is Index + Contador,
   nth1(NextRight, Valores, V2),
   V1 #\= V2,
   auxLinhaCompleta(V1, Valores, Contador1, K, Index).
