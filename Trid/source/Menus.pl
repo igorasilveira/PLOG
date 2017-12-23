@@ -21,8 +21,13 @@ explanation :-
   write('---      HOW TO PLAY      ---\n'),
   write('*****************************\n'),
   novaLinha(2),
-  write('TODO...'),
-  novaLinha(2).
+  write('The Trid puzzle is a triangular puzzle that is quite similar to Sudoku\n'),
+	write('in any given range, you must place numbers in each inner triangle vertex\n'),
+	write('such that no digit is repetead along any straight line.\n'),
+	write('In our approach, you can choose the PC to solve a randomly sized Trid puzzle,\n'),
+	write('or specify its size, after selecting the option one "Solve a Trid puzzle".\n'),
+	write('The output is a Trid puzzle solved.\n'),
+	novaLinha(2).
 
 %- Menu Inicial -%
 
