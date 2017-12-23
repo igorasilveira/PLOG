@@ -4,7 +4,7 @@ imprimeTitulo :-
 	limpaEcra,
 	novaLinha(3),
 	write('******************************\n'),
-	write('---          TRIAD         ---\n'),
+	write('---          TRID          ---\n'),
 	write('******************************\n'),
 	novaLinha(1).
 
@@ -32,7 +32,7 @@ menuPrincipal :-
   write('*        Main Menu      *\n'),
   write('*************************\n'),
   novaLinha(2),
-  write('1: Solve Triad\n'),
+  write('1: Solve a Trid\n'),
   write('2: See Triad Puzzle Explanation\n'),
   write('3: Quit\n\n'),
   repeat,
@@ -66,7 +66,7 @@ selecionaTamanho :-
   write('*     Select a Number    *\n'),
   write('**************************\n'),
   novaLinha(2),
-  write('[NOTICE] The smallest TRIAD allowed is of 3x3\n'),
+  write('[NOTICE] The smallest TRID allowed is of 3x3\n'),
   novaLinha(2),
   repeat,
   read(Choice),
@@ -74,13 +74,13 @@ selecionaTamanho :-
 
   verificaMenu2(1) :-
     nl,
-    write('\n[ERROR] The smallest TRIAD allowed is of 3x3\n\n'),
+    write('\n[ERROR] The smallest TRID allowed is of 3x3\n\n'),
     !,
     false.
 
   verificaMenu2(2) :-
     nl,
-    write('\n[ERROR] The smallest TRIAD allowed is of 3x3\n\n'),
+    write('\n[ERROR] The smallest TRID allowed is of 3x3\n\n'),
     !,
     false.
 

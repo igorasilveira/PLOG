@@ -3,6 +3,6 @@
 :- include('Interface.pl').
 :- include('Logica.pl').
 
-triad :-
+trid :-
   limpaEcra,
   menuPrincipal.

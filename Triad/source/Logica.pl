@@ -2,47 +2,6 @@
 :- use_module(library(clpfd)).
 :- use_module(library(random)).
 
-% Faz update a Board
-updateTo(_,[],[],_,_).
-updateTo(ElemToChange,[[_|Xs]|Ys],[[ElemToChange|Xs1]|Ys1],0,0) :-
-                    !,updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],-1,-1).
-
-updateTo(ElemToChange,[[X]|Xs],[[X]|Xs1],-1,-1) :-
-                    updateTo(ElemToChange,Xs,Xs1,-1,-1),!.
-
-updateTo(ElemToChange,[[X|Xs]|Ys],[[X|Xs1]|Ys1],-1,-1) :-
-                    updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],-1,-1).
-
-updateTo(ElemToChange,[[X|Xs]|Ys],[[X|Xs1]|Ys1],N,0) :-
-                    N1 is N-1,
-                    updateTo(ElemToChange,[Xs|Ys],[Xs1|Ys1],N1,0).
-
-updateTo(ElemToChange,[Xs|Ys],[Xs|Ys1],N,M) :-
-                    M1 is M-1,
-                    updateTo(ElemToChange,Ys,Ys1,N,M1),!.
-
-updateBoard(ElemToChange,Y,X,Board,NewBoard) :-
-                    updateTo(ElemToChange,Board,NewBoard,X,Y).
-
-selecionaPares(Tamanho, Tamanho, _, []).
-
-selecionaPares(Count, Tamanho, Posicoes, [H | T]) :-
-  length(Posicoes, TamanhoPosicoes),
-  random(0, TamanhoPosicoes, Indice),
-  nth0(Indice, Posicoes, H, RestoPosicoes),
-  Count1 is Count + 1,
-  selecionaPares(Count1, Tamanho, RestoPosicoes, T).
-
-geraNumeros(Tabuleiro, [], Out):-
-  updateBoard(-1, 0, 0, Tabuleiro, Out).
-
-geraNumeros(Tabuleiro, [H|T], Out) :-
-  nth0(0, H, Y),
-  nth0(1, H, X),
-  random(6, 12, Numero),
-  updateBoard(Numero, Y, X, Tabuleiro, NovoTabuleiro),
-  geraNumeros(NovoTabuleiro, T, Out).
-
 calculaSolucao(Valores, _Tamanho) :-
   _Celulas is floor((exp(_Tamanho, 2) + _Tamanho) / 2),
   length(Valores, _Celulas),
@@ -109,15 +68,6 @@ safeDiagonal(V1, Valores, K, IndexLeft, IndexRight, Final) :-
   K1 is K + 1,
   safeDiagonal(V1, Valores, K1, NextLeft, NextRight, Final).
 
-insereValores(Tabuleiro, [], [], Out) :-
-  updateBoard(-1, 0, 0, Tabuleiro, Out).
-
-insereValores(Tabuleiro, [PosHead | PosTail], [ValHead | ValTail], Out) :-
-  nth0(0, PosHead, Y),
-  nth0(1, PosHead, X),
-  updateBoard(ValHead, Y, X, Tabuleiro, NovoTabuleiro),
-  insereValores(NovoTabuleiro, PosTail, ValTail, Out).
-
 resolvePuzzle(_Tamanho) :-
   imprimeTitulo,
   nl,
@@ -131,7 +81,7 @@ resolvePuzzle(_Tamanho) :-
 mostraResolucao(_Tamanho, Valores) :-
   imprimeTitulo,
   write('    Solution for '), write(_Tamanho), write('x'),
-  write(_Tamanho), write(' Triad'),
+  write(_Tamanho), write(' Trid'),
   novaLinha(2),
   imprimeLista(Valores, 1, 1, _Tamanho),
   %write(Valores),
